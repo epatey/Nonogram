@@ -15,7 +15,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        // Insert code here to initialize your application
+        let context = PuzzleContext()
+        let puzzle = Puzzle()
+        let root = puzzle.root(context)
+
+        while (true) {
+            Puzzle.findRowColSolutions(context, rows: true)
+            Puzzle.findRowColSolutions(context, rows: false)
+        }
+
+
+        
+        puzzle.bt(context, candidate: root)
+        print("done")
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {

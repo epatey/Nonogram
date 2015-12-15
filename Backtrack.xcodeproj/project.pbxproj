@@ -11,6 +11,7 @@
 		078E450D1C1F4002003C27F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 078E450C1C1F4002003C27F0 /* Assets.xcassets */; };
 		078E45101C1F4002003C27F0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 078E450E1C1F4002003C27F0 /* MainMenu.xib */; };
 		078E451B1C1F4002003C27F0 /* BacktrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078E451A1C1F4002003C27F0 /* BacktrackTests.swift */; };
+		078E45281C1F6533003C27F0 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078E45271C1F6533003C27F0 /* Puzzle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		078E45161C1F4002003C27F0 /* BacktrackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BacktrackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		078E451A1C1F4002003C27F0 /* BacktrackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacktrackTests.swift; sourceTree = "<group>"; };
 		078E451C1C1F4002003C27F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		078E45271C1F6533003C27F0 /* Puzzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				078E450C1C1F4002003C27F0 /* Assets.xcassets */,
 				078E450E1C1F4002003C27F0 /* MainMenu.xib */,
 				078E45111C1F4002003C27F0 /* Info.plist */,
+				078E45271C1F6533003C27F0 /* Puzzle.swift */,
 			);
 			path = Backtrack;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				078E45281C1F6533003C27F0 /* Puzzle.swift in Sources */,
 				078E450B1C1F4002003C27F0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,6 +377,7 @@
 				078E45211C1F4002003C27F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		078E45221C1F4002003C27F0 /* Build configuration list for PBXNativeTarget "BacktrackTests" */ = {
 			isa = XCConfigurationList;
@@ -381,6 +386,7 @@
 				078E45241C1F4002003C27F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
