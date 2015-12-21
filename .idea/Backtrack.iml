@@ -2,13 +2,17 @@
 <module type="CIDR_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/Backtrack/Puzzle.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backtrack/PartialSolution.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backtrack/AppDelegate.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backtrack/BacktrackCandidate.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backtrack/LineCandidate.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backtrack/LineSolver.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backtrack/Assets.xcassets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backtrack/Info.plist" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Backtrack/Base.lproj/MainMenu.xib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BacktrackTests/Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BacktrackTests/BacktrackTests.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Backtrack/Puzzle.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Backtrack/Assets.xcassets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Backtrack/Base.lproj/MainMenu.xib" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Backtrack/Info.plist" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Backtrack/AppDelegate.swift" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

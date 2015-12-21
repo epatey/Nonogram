@@ -7,11 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0715DE4A1C234E760012C7B5 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078E45271C1F6533003C27F0 /* Puzzle.swift */; };
+		0752ADD01C2EE450008C1DB8 /* BacktrackCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA289458ADF0779C164DB4C /* BacktrackCandidate.swift */; };
 		078E450B1C1F4002003C27F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078E450A1C1F4002003C27F0 /* AppDelegate.swift */; };
 		078E450D1C1F4002003C27F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 078E450C1C1F4002003C27F0 /* Assets.xcassets */; };
 		078E45101C1F4002003C27F0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 078E450E1C1F4002003C27F0 /* MainMenu.xib */; };
 		078E451B1C1F4002003C27F0 /* BacktrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078E451A1C1F4002003C27F0 /* BacktrackTests.swift */; };
 		078E45281C1F6533003C27F0 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078E45271C1F6533003C27F0 /* Puzzle.swift */; };
+		2FA2857300596EBDF7281FA3 /* LineSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA288E3EB0617B8FEF15CCB /* LineSolver.swift */; };
+		2FA289ADC7858D00ECFE6D02 /* BacktrackCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA289458ADF0779C164DB4C /* BacktrackCandidate.swift */; };
+		2FA289CDD427FAD217688CA7 /* LineCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA288BA5BA57165156B7FE7 /* LineCandidate.swift */; };
+		2FA28DF584679F0EFF89FC33 /* PartialSolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA28FEEC4910104BD76A48E /* PartialSolution.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +40,10 @@
 		078E451A1C1F4002003C27F0 /* BacktrackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacktrackTests.swift; sourceTree = "<group>"; };
 		078E451C1C1F4002003C27F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		078E45271C1F6533003C27F0 /* Puzzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
+		2FA288BA5BA57165156B7FE7 /* LineCandidate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineCandidate.swift; sourceTree = "<group>"; };
+		2FA288E3EB0617B8FEF15CCB /* LineSolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSolver.swift; sourceTree = "<group>"; };
+		2FA289458ADF0779C164DB4C /* BacktrackCandidate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BacktrackCandidate.swift; sourceTree = "<group>"; };
+		2FA28FEEC4910104BD76A48E /* PartialSolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartialSolution.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +90,10 @@
 				078E450E1C1F4002003C27F0 /* MainMenu.xib */,
 				078E45111C1F4002003C27F0 /* Info.plist */,
 				078E45271C1F6533003C27F0 /* Puzzle.swift */,
+				2FA288E3EB0617B8FEF15CCB /* LineSolver.swift */,
+				2FA289458ADF0779C164DB4C /* BacktrackCandidate.swift */,
+				2FA28FEEC4910104BD76A48E /* PartialSolution.swift */,
+				2FA288BA5BA57165156B7FE7 /* LineCandidate.swift */,
 			);
 			path = Backtrack;
 			sourceTree = "<group>";
@@ -146,7 +160,6 @@
 					};
 					078E45151C1F4002003C27F0 = {
 						CreatedOnToolsVersion = 7.1.1;
-						TestTargetID = 078E45061C1F4002003C27F0;
 					};
 				};
 			};
@@ -195,6 +208,10 @@
 			files = (
 				078E45281C1F6533003C27F0 /* Puzzle.swift in Sources */,
 				078E450B1C1F4002003C27F0 /* AppDelegate.swift in Sources */,
+				2FA2857300596EBDF7281FA3 /* LineSolver.swift in Sources */,
+				2FA289ADC7858D00ECFE6D02 /* BacktrackCandidate.swift in Sources */,
+				2FA28DF584679F0EFF89FC33 /* PartialSolution.swift in Sources */,
+				2FA289CDD427FAD217688CA7 /* LineCandidate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +220,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				078E451B1C1F4002003C27F0 /* BacktrackTests.swift in Sources */,
+				0752ADD01C2EE450008C1DB8 /* BacktrackCandidate.swift in Sources */,
+				0715DE4A1C234E760012C7B5 /* Puzzle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,26 +354,22 @@
 		078E45231C1F4002003C27F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = BacktrackTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bouldertop.BacktrackTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Backtrack.app/Contents/MacOS/Backtrack";
 			};
 			name = Debug;
 		};
 		078E45241C1F4002003C27F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = BacktrackTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bouldertop.BacktrackTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Backtrack.app/Contents/MacOS/Backtrack";
 			};
 			name = Release;
 		};

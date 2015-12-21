@@ -26,11 +26,56 @@ class BacktrackTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
+    func testComputePackedLine() {
+        let line:[Bool?] = [nil, nil, false, nil, nil, nil, nil, false, nil]
+        let rules = [3, 1]
+        let result:[Bool?] = Puzzle.computePackedLine(line, rules: rules)
+        let expected:[Bool?] = [false, false, false, true, true, true, false, false, true]
+        XCTAssert(result == expected)
     }
-    
+
+    func testComputePackedLine2() {
+        let line:[Bool?] = [nil, nil, nil, nil, nil, true]
+        let rules = [3, 1]
+        let result:[Bool?] = Puzzle.computePackedLine(line, rules: rules)
+        let expected:[Bool?] = [true, true, true, false, false, true]
+        XCTAssert(result == expected)
+    }
+
+    func testComputeLineOverlap() {
+        let line:[Bool?] = [nil, nil, nil, nil, nil, true]
+        let rules = [3, 1]
+        let overlap = Puzzle.computeLineOverlap(line, rules: rules)
+        let expected:[Bool?] = [nil, true, true, nil, false, true]
+        XCTAssert(overlap == expected)
+    }
+
+    func testPotentialLine() {
+        let p = Puzzle.PotentialLine(rules: [3, 1], lineLength: 6)
+        var x:[Bool] = []
+        for i in 0..<6 {
+            x.append(p[i])
+        }
+
+        XCTAssertEqual(x, [true, true, true, false, true, false])
+
+
+        XCTAssertEqual(p.runAtOffset(0)!.index, 0)
+        XCTAssertEqual(p.runAtOffset(1)!.index, 0)
+        XCTAssertEqual(p.runAtOffset(2)!.index, 0)
+        XCTAssertNil(p.runAtOffset(3))
+        XCTAssertEqual(p.runAtOffset(4)!.index, 1)
+        XCTAssertNil(p.runAtOffset(5))
+    }
+
+    // computeLineOverlap
 }
+
+func ==<T: Equatable>(lhs: [T?], rhs: [T?]) -> Bool {
+    if lhs.count != rhs.count { return false }
+    for (l,r) in zip(lhs,rhs) {
+        if l != r { return false }
+    }
+    return true
+}
+
