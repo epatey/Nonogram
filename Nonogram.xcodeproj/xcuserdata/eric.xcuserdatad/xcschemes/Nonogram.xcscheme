@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0710"
+   LastUpgradeVersion = "0720"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "078E45061C1F4002003C27F0"
-               BuildableName = "Backtrack.app"
-               BlueprintName = "Backtrack"
-               ReferencedContainer = "container:Backtrack.xcodeproj">
+               BlueprintIdentifier = "07330A711C30881E002F35C7"
+               BuildableName = "Nonogram.app"
+               BlueprintName = "Nonogram"
+               ReferencedContainer = "container:Nonogram.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,24 +28,14 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "078E45151C1F4002003C27F0"
-               BuildableName = "BacktrackTests.xctest"
-               BlueprintName = "BacktrackTests"
-               ReferencedContainer = "container:Backtrack.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "078E45061C1F4002003C27F0"
-            BuildableName = "Backtrack.app"
-            BlueprintName = "Backtrack"
-            ReferencedContainer = "container:Backtrack.xcodeproj">
+            BlueprintIdentifier = "07330A711C30881E002F35C7"
+            BuildableName = "Nonogram.app"
+            BlueprintName = "Nonogram"
+            ReferencedContainer = "container:Nonogram.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -65,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "078E45061C1F4002003C27F0"
-            BuildableName = "Backtrack.app"
-            BlueprintName = "Backtrack"
-            ReferencedContainer = "container:Backtrack.xcodeproj">
+            BlueprintIdentifier = "07330A711C30881E002F35C7"
+            BuildableName = "Nonogram.app"
+            BlueprintName = "Nonogram"
+            ReferencedContainer = "container:Nonogram.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -84,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "078E45061C1F4002003C27F0"
-            BuildableName = "Backtrack.app"
-            BlueprintName = "Backtrack"
-            ReferencedContainer = "container:Backtrack.xcodeproj">
+            BlueprintIdentifier = "07330A711C30881E002F35C7"
+            BuildableName = "Nonogram.app"
+            BlueprintName = "Nonogram"
+            ReferencedContainer = "container:Nonogram.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

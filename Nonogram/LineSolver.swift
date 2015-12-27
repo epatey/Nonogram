@@ -56,24 +56,26 @@ class LineSolver {
     }
 
     private static func computeLineOverlap(line: PartialLine, rules: [Int]) -> PartialLine {
-        let left         = LineSolver.computePackedLine(line, rules: rules)
-        let encodedLeft  = encodedLineForLine(left)
-        let right        = LineSolver.computePackedLine(line.reverse(), rules: rules.reverse()).reverse()
+        let left = LineSolver.computePackedLine(line, rules: rules)
+        let encodedLeft = encodedLineForLine(left)
+        let right = LineSolver.computePackedLine(line.reverse(), rules: rules.reverse()).reverse()
         let encodedRight = encodedLineForLine(right)
 
         return PartialLine(input: zip(encodedLeft, encodedRight)
-            .map { (l, r) -> Bool? in
-                if l == r {
-                    return (l % 2 == 1)
-                }
-                return nil
-            })
+        .map {
+            (l, r) -> Bool? in
+            if l == r {
+                return (l % 2 == 1)
+            }
+            return nil
+        })
     }
-    
+
     private static func encodedLineForLine(line: PartialLine) -> [Int] {
-        return Array(line.aggregate(0) { (accumulator, element) -> (Int) in
-             accumulator + (((accumulator % 2 == 1) != element!) ? 1 : 0)
-            })
+        return Array(line.aggregate(0) {
+            (accumulator, element) -> (Int) in
+            accumulator + (((accumulator % 2 == 1) != element!) ? 1 : 0)
+        })
     }
 
     private static func computePackedLine(line: PartialLine, rules: [Int]) -> PartialLine {
@@ -131,14 +133,13 @@ class LineSolver {
                     continue
                 }
 
-                let run:           PackedLine.Run
+                let run: PackedLine.Run
                 let offsetToShift: Int
                 if truth {
                     // Shift prior run such that its last cell is at offset i
                     run = potentialLine.runPriorToOffset(i)!
                     offsetToShift = i - (potentialLine.runOffset(run) + run.length - 1)
-                }
-                else {
+                } else {
                     // Shift current run such that its first cell is at offset i + 1
                     run = potentialLine.runAtOffset(i)!
                     offsetToShift = i + 1 - potentialLine.runOffset(run)
@@ -154,14 +155,14 @@ class LineSolver {
     }
 
     private struct PackedLine {
-        private var runs:          [Run] = []
-        private let lineLength:    Int
+        private var runs: [Run] = []
+        private let lineLength: Int
         private let totalLineSlop: Int
 
         private class Run {
             var extraLeadingSpace: Int
-            let index:             Int
-            let length:            Int
+            let index: Int
+            let length: Int
 
             init(extraLeadingSpace: Int, index: Int, length: Int) {
                 self.extraLeadingSpace = extraLeadingSpace
@@ -173,7 +174,7 @@ class LineSolver {
 
         init(rules: [Int], lineLength: Int) {
             self.lineLength = lineLength
-            var i             = 0
+            var i = 0
             var consumedSpace = 0
             for rule in rules {
                 consumedSpace += ((i > 0) ? 1 : 0) + rule
@@ -183,7 +184,7 @@ class LineSolver {
         }
 
         private func runOffset(targetRun: Run) -> Int {
-            var i        = 0
+            var i = 0
             var firstRun = true
             for run in runs {
                 i += (firstRun ? 0 : 1) + run.extraLeadingSpace
@@ -213,7 +214,7 @@ class LineSolver {
         }
 
         private func runAtOffset(offset: Int) -> Run? {
-            var i        = offset
+            var i = offset
             var firstRun = true
             for run in runs {
                 let leadingSpace = (firstRun ? 0 : 1) + run.extraLeadingSpace
@@ -237,7 +238,7 @@ class LineSolver {
                 if (index >= lineLength) {
                     preconditionFailure("Invalid index")
                 }
-                var i        = index
+                var i = index
                 var firstRun = true
                 for run in runs {
                     let leadingSpace = (firstRun ? 0 : 1) + run.extraLeadingSpace
@@ -277,11 +278,11 @@ class LineSolver {
         // returns true. Otherwise, if it attempts, recursively, to move the subsequent
         // range enough to avoid the collision and then returns false.
         private func shiftRun(run: Run, offset: Int) -> Bool {
-            let isLastRun             = run.index == runs.count - 1
-            let nextRun: Run?         = isLastRun ? nil : runs[run.index + 1]
+            let isLastRun = run.index == runs.count - 1
+            let nextRun: Run? = isLastRun ? nil : runs[run.index + 1]
             let slopAvailableForShift = isLastRun
-                                        ? self.trailingSpaceOnLine()
-                                        : nextRun!.extraLeadingSpace
+                    ? self.trailingSpaceOnLine()
+                    : nextRun!.extraLeadingSpace
 
             let shortfall = offset - slopAvailableForShift
             if (shortfall > 0) {
@@ -298,12 +299,14 @@ class LineSolver {
             return shortfall <= 0
         }
     }
+
 }
 
 extension SequenceType {
-    func aggregate<T>(initial: T, combine: (accumulator: T, element: Generator.Element) -> T) -> [T] {
+    func aggregate<T>(initial: T, combine: (accumulator:T, element:Generator.Element) -> T) -> [T] {
         var accumulator = initial
-        return map { e in
+        return map {
+            e in
             accumulator = combine(accumulator: accumulator, element: e)
             return accumulator
         }

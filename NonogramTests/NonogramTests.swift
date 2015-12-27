@@ -7,9 +7,9 @@
 //
 
 import XCTest
-@testable import Backtrack
+@testable import Nonogram
 
-class BacktrackTests: XCTestCase {
+class NonogramTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

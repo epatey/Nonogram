@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Backtrack.xcscheme</key>
+		<key>Nonogram.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,6 +12,16 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>07330A711C30881E002F35C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>07330A801C30881E002F35C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>078E45061C1F4002003C27F0</key>
 		<dict>
 			<key>primary</key>

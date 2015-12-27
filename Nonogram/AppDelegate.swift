@@ -16,18 +16,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         let context = PuzzleContext()
-        
+
         var currentBest = PartialSolution(numRows: context.rows,
-            numColumns: context.columns,
-            newValues: context.knownCells.map() {  ($0, $1, true) })
+                numColumns: context.columns,
+                newValues: context.knownCells.map() {
+                    ($0, $1, true)
+                })
 
-        
-        currentBest = LineSolver.execute(context, partialSolution: currentBest)
 
-        currentBest = Puzzle.findLineSolutions(context, partialSolution: currentBest, rowAspect: true)
-        currentBest = Puzzle.findLineSolutions(context, partialSolution: currentBest, rowAspect: false)
-        currentBest.dump()
-        
+        while (true) {
+            currentBest = LineSolver.execute(context, partialSolution: currentBest)
+
+            currentBest = LineBacktracker.execute(context, partialSolution: currentBest)
+        }
+
         /*
         var rowSols:[[BacktrackCandidate]] = []
         let colSols:[[BacktrackCandidate]]
