@@ -17,28 +17,23 @@ class PartialSolution {
     }
     
     func row(row:Int) -> PartialLine {
-        return rows[row]
+        return PartialLine(input: rows[row].cells)
     }
 
     func column(column:Int) -> PartialLine {
-        var result: PartialLine = []
-        for row in rows {
-            result.append(row[column])
-        }
-
-        return result
+        return PartialLine(input: rows.map() { $0.cells[column] })
     }
 
     func addCellValues(newValues: [CellValue]? ) -> PartialSolution {
         if (newValues == nil) {
             return self
         }
-        return PartialSolution(numRows: rows.count, numColumns: rows[0].count, copyFrom: self, newValues: newValues!)
+        return PartialSolution(numRows: rows.count, numColumns: rows[0].cells.count, copyFrom: self, newValues: newValues!)
     }
 
     func dump() {
         for row in rows {
-            for value in row {
+            for value in row.cells {
                 let x = value == nil ? "?" : value! ? "█" : " "
                 print(x, terminator:"")
             }
@@ -48,17 +43,47 @@ class PartialSolution {
 
     func knownCellCount() -> Int {
         return rows.reduce(0) { (total, row) -> Int in
-            return total + row.reduce(0, combine: { (tt, val) -> Int in
+            return total + row.cells.reduce(0, combine: { (tt, val) -> Int in
                 return tt + (val != nil ? 1 : 0)
             })
         }
     }
 
     private static func addKnownCells(rows:Int, columns: Int, inputCells: [PartialLine]?, cellsToAdd: [CellValue] ) -> [PartialLine] {
-        var x = inputCells ?? [PartialLine](count: rows, repeatedValue: PartialLine(count: columns, repeatedValue: nil))
-        for colRow in cellsToAdd {
-            x[colRow.row][colRow.col] = colRow.value
+        var x = inputCells ?? [PartialLine](count: rows, repeatedValue: PartialLine(count: columns))
+        let groupedCellsToAdd = cellsToAdd.groupBy { $0.row }
+
+        for row in 0..<rows {
+            guard let cellsToAddForThisRow = groupedCellsToAdd[row] else {
+                continue
+            }
+
+            var scratchCells = x[row].cells
+            for cellValue in cellsToAddForThisRow {
+                scratchCells[cellValue.col] = cellValue.value
+            }
+            x[row] = PartialLine(input: scratchCells)
         }
+        
         return x
+    }
+}
+
+
+extension Array {
+    func groupBy <U> (groupingFunction group: (Element) -> U) -> [U: Array] {
+        var result = [U: Array]()
+
+        for item in self {
+            let groupKey = group(item)
+            var dictValue = result[groupKey] ?? []
+            
+            // TODO: I still don't quite get the immutability rules of nested collections.
+            // when I simply mutated the dictValue in place and didn't re-assign it, it was hosed
+            dictValue.append(item)
+            result[groupKey] = dictValue
+        }
+
+        return result
     }
 }

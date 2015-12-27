@@ -6,10 +6,8 @@
 import Foundation
 
 class LineSolver {
-    static func execute(context: PuzzleContext) -> PartialSolution {
-        var currentBestSolution = PartialSolution(numRows: context.rows,
-                                                  numColumns: context.columns,
-                                                  newValues: context.knownCells.map() {  ($0, $1, true) })
+    static func execute(context: PuzzleContext, partialSolution: PartialSolution) -> PartialSolution {
+        var currentBestSolution = partialSolution
 
         currentBestSolution.dump()
 
@@ -40,10 +38,7 @@ class LineSolver {
 
     private static func lineOverlapLearnings(line: PartialLine, rules: [Int], lineNumber: Int, isRow: Bool) -> [CellValue]? {
         let newLine = LineSolver.computeLineOverlap(line, rules: rules)
-        return newCellValues(line,
-                             newLine: newLine,
-                             lineNumber: lineNumber,
-                             isRow: isRow)
+        return line.newCellValues(newLine, lineNumber: lineNumber, isRow: isRow)
     }
 
     private static func rowOverlap(rowNumber: Int, currentBestSolution: PartialSolution, context: PuzzleContext) -> PartialSolution {
@@ -63,32 +58,22 @@ class LineSolver {
     private static func computeLineOverlap(line: PartialLine, rules: [Int]) -> PartialLine {
         let left         = LineSolver.computePackedLine(line, rules: rules)
         let encodedLeft  = encodedLineForLine(left)
-        let right        = Array(LineSolver.computePackedLine(Array(line.reverse()), rules: Array(rules.reverse())).reverse())
+        let right        = LineSolver.computePackedLine(line.reverse(), rules: rules.reverse()).reverse()
         let encodedRight = encodedLineForLine(right)
 
-        var result: PartialLine = []
-        for (l, r) in zip(encodedLeft, encodedRight) {
-            if l == r {
-                result.append(l % 2 == 1)
-            }
-            else {
-                result.append(nil)
-            }
-        }
-
-        return result
+        return PartialLine(input: zip(encodedLeft, encodedRight)
+            .map { (l, r) -> Bool? in
+                if l == r {
+                    return (l % 2 == 1)
+                }
+                return nil
+            })
     }
     
     private static func encodedLineForLine(line: PartialLine) -> [Int] {
-        var code          = 0
-        var result: [Int] = []
-        for x in line {
-            if (code % 2 == 1) != x! {
-                code++
-            }
-            result.append(code)
-        }
-        return result
+        return Array(line.aggregate(0) { (accumulator, element) -> (Int) in
+             accumulator + (((accumulator % 2 == 1) != element!) ? 1 : 0)
+            })
     }
 
     private static func computePackedLine(line: PartialLine, rules: [Int]) -> PartialLine {
@@ -279,11 +264,12 @@ class LineSolver {
         }
 
         func expand() -> PartialLine {
-            var result: PartialLine = []
+            // TODO: make this class a SequenceType
+            var result: [Bool?] = []
             for i in 0 ..< lineLength {
                 result.append(self[i])
             }
-            return result
+            return PartialLine(input: result)
         }
 
         // This method will attempt to shift the run specified by the amount specified.
@@ -310,6 +296,16 @@ class LineSolver {
             }
 
             return shortfall <= 0
+        }
+    }
+}
+
+extension SequenceType {
+    func aggregate<T>(initial: T, combine: (accumulator: T, element: Generator.Element) -> T) -> [T] {
+        var accumulator = initial
+        return map { e in
+            accumulator = combine(accumulator: accumulator, element: e)
+            return accumulator
         }
     }
 }

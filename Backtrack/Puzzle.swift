@@ -8,63 +8,41 @@
 
 import Foundation
 
-class PartialLineC {
+class PartialLine : SequenceType {
     let cells: [Bool?]
-    
-    init<SeqBool:SequenceType where SeqBool.Generator.Element == Bool?>(input: SeqBool) {
+
+    init(count: Int) {
+        cells = [Bool?](count: count, repeatedValue: nil)
+    }
+
+    init<BoolOptionSequence:SequenceType where BoolOptionSequence.Generator.Element == Bool?>(input: BoolOptionSequence) {
         cells = Array<Bool?>(input)
     }
-    
+    private init(cells:[Bool?]) {
+        self.cells = cells
+    }
+
+    typealias Generator = Array<Bool?>.Generator
+    func generate() -> Generator {
+        return cells.generate()
+    }
+    var count: Int {
+        get  {
+            return cells.count
+        }
+    }
+
+    func reverse() -> PartialLine {
+        return PartialLine(cells: cells.reverse())
+    }
+
+    subscript(index: Int) -> Bool? {
+        return cells[index]
+    }
+
     func newCellValues(newLine: PartialLine,
-        lineNumber: Int,
-        isRow: Bool)  -> [CellValue]? {
-            let x: (lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue
-            if (isRow) {
-                x = rowCell
-            }
-            else {
-                x = columnCell
-            }
-            
-            return newCellValuesx(self.cells,
-                newLine: newLine,
-                lineNumber: lineNumber,
-                changeCreator: x)
-    }
-    
-    private static func newCellValuesx(oldLine: PartialLine,
-        newLine: PartialLine,
-        lineNumber: Int,
-        changeCreator: (lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue) -> [CellValue]? {
-            var changes:[CellValue]?
-            for lineOffset in 0 ..< oldLine.count {
-                guard let newValue = newLine[lineOffset] where oldLine[lineOffset] == nil else {
-                    continue
-                }
-                
-                if (changes == nil) {
-                    changes = []
-                }
-                let change = changeCreator(lineNumber: lineNumber, lineOffset: lineOffset, value: newValue)
-                changes!.append(change)
-            }
-            
-            return changes
-    }
-    
-
-}
-
-typealias PartialLine = [Bool?]
-typealias CellValue = (col:Int, row:Int, value:Bool)
-
-// TODO: This func should become part of a future class (vs typealias) version of PartialLine
-
-
-func newCellValues(oldLine: PartialLine,
-    newLine: PartialLine,
-    lineNumber: Int,
-    isRow: Bool)  -> [CellValue]? {
+                       lineNumber: Int,
+                       isRow: Bool) -> [CellValue]? {
         let x: (lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue
         if (isRow) {
             x = rowCell
@@ -72,47 +50,50 @@ func newCellValues(oldLine: PartialLine,
         else {
             x = columnCell
         }
-        
-        return newCellValuesx(oldLine,
-            newLine: newLine,
-            lineNumber: lineNumber,
-            changeCreator: x)
-}
 
-func newCellValuesx(oldLine: PartialLine,
-    newLine: PartialLine,
-    lineNumber: Int,
-    changeCreator: (lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue) -> [CellValue]? {
-        var changes:[CellValue]?
-        for lineOffset in 0 ..< oldLine.count {
-            guard let newValue = newLine[lineOffset] where oldLine[lineOffset] == nil else {
+        return PartialLine.newCellValuesx(self,
+                              newLine: newLine,
+                              lineNumber: lineNumber,
+                              changeCreator: x)
+    }
+
+    private static func newCellValuesx(oldLine: PartialLine,
+                                       newLine: PartialLine,
+                                       lineNumber: Int,
+                                       changeCreator: (lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue) -> [CellValue]? {
+        var changes: [CellValue]?
+        for lineOffset in 0 ..< oldLine.cells.count {
+            guard let newValue = newLine.cells[lineOffset] where oldLine.cells[lineOffset] == nil else {
                 continue
             }
-            
+
             if (changes == nil) {
                 changes = []
             }
             let change = changeCreator(lineNumber: lineNumber, lineOffset: lineOffset, value: newValue)
             changes!.append(change)
         }
-        
+
         return changes
+    }
+
+
 }
 
+typealias DEPRECATED_PartialLine = [Bool?]
+typealias CellValue = (col:Int, row:Int, value:Bool)
+
 // TODO: These should go into some sort of polymorphic cell vs column helper
-func rowCell(lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue {
+func rowCell(lineNumber: Int, lineOffset: Int, value: Bool) -> CellValue {
     return (col: lineOffset, row: lineNumber, value: value)
 }
 
-func columnCell(lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue {
+func columnCell(lineNumber: Int, lineOffset: Int, value: Bool) -> CellValue {
     return (col: lineNumber, row: lineOffset, value: value)
 }
 
 
-
-
 class PuzzleContext {
-    /*
     let rows           = 10
     let columns        = 5
     let rowConstraints = [
@@ -138,9 +119,9 @@ class PuzzleContext {
 
 let knownCells: [(col:Int, row:Int)] = [
     ]
-    */
 
-    var rowsSolutions: [[BacktrackCandidate]] = []
+    /*
+var rowsSolutions: [[BacktrackCandidate]] = []
 
     let rows           = 25
     let columns        = 25
@@ -224,6 +205,7 @@ let knownCells: [(col:Int, row:Int)] = [
             (20, 21),
             (21, 21),
     ]
+*/
 }
 
 struct ColumnSequence: SequenceType {
@@ -258,18 +240,20 @@ struct ColumnSequence: SequenceType {
 }
 
 class Puzzle {
-    static func findLineSolutions(context: PuzzleContext, partialSolution:PartialSolution, rowAspect: Bool) -> PartialSolution {
-        let lock:      AnyObject              = Int(0)
-        let count                             = rowAspect ? context.rows : context.columns
-        var solutions = [[BacktrackCandidate]](count: count, repeatedValue: [])
+    static func findLineSolutions(context: PuzzleContext, partialSolution: PartialSolution, rowAspect: Bool) -> PartialSolution {
+        let lock: AnyObject = Int(0)
+        let count           = rowAspect ? context.rows : context.columns
+        var solutions       = [[BacktrackCandidate]](count: count, repeatedValue: [])
 //        dispatch_apply(count, dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
 //            lineNum -> Void in
 
 
         var currentSolution = partialSolution
-        for lineNum in 0..<count {
-            let line:PartialLine          = rowAspect ? currentSolution.row(lineNum) : currentSolution.column(lineNum)
-            let lineMissing = line.reduce(0) { $0 + ($1 == nil ? 1 : 0) }
+        for lineNum in 0 ..< count {
+            let line: PartialLine = rowAspect ? currentSolution.row(lineNum) : currentSolution.column(lineNum)
+            let lineMissing = line.reduce(0) {
+                $0 + ($1 == nil ? 1 : 0)
+            }
             if (lineMissing == 0) {
                 continue
             }
@@ -282,17 +266,14 @@ class Puzzle {
             solutions[lineNum] = lineSolutions
 
             if (lineSolutions.count == 1) {
-                let lineSolution = (lineSolutions[0] as! LineCandidate).cells
-                var partialLine:PartialLine = []
-                for x in lineSolution {
-                    partialLine.append(x)
-                }
-                
-                let ncv = newCellValues(line, newLine: partialLine, lineNumber: lineNum, isRow: true)
+                let lineSolution                        = (lineSolutions[0] as! LineCandidate).cells
+                let partialLine = PartialLine(input: lineSolution.map() { $0 })
+
+                let ncv = line.newCellValues(partialLine, lineNumber: lineNum, isRow: rowAspect)
                 if (ncv != nil) {
                     currentSolution = currentSolution.addCellValues(ncv)
                 }
-                
+
                 /*
                 if (rowAspect) {
                     context.mustBe[lineNum] = lineSolution.map() {

@@ -16,12 +16,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         let context = PuzzleContext()
-        let puzzle = Puzzle()
+        
+        var currentBest = PartialSolution(numRows: context.rows,
+            numColumns: context.columns,
+            newValues: context.knownCells.map() {  ($0, $1, true) })
 
-        var knownCount = 0
-        var currentBest = LineSolver.execute(context)
+        
+        currentBest = LineSolver.execute(context, partialSolution: currentBest)
 
         currentBest = Puzzle.findLineSolutions(context, partialSolution: currentBest, rowAspect: true)
+        currentBest = Puzzle.findLineSolutions(context, partialSolution: currentBest, rowAspect: false)
         currentBest.dump()
         
         /*
