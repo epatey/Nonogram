@@ -12,7 +12,7 @@ typealias CellValue = (col:Int, row:Int, value:Bool)
 typealias CellValueBuilder = (lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue
 
 struct LineHelper {
-    let getLine: (lineNumber:Int) -> PartialLine
+    let getLine: (partialSolution:PartialSolution, lineNumber:Int) -> PartialLine
     let getRules: (lineNumber:Int) -> [Int]
     let getCellValue: CellValueBuilder
     let getLineCount: () -> Int
@@ -20,6 +20,28 @@ struct LineHelper {
 }
 
 class PuzzleContext {
+    // TODO: Seems like I'm trying too hard here. Just trying to use the strategy pattern. I don't
+    // think I've got it clean enough yet. Struggled trying to make these let's rather than var lazy's
+    var rowHelper: LineHelper {
+        get {
+            return LineHelper(getLine: { $0.row($1) },
+                getRules: { self.rowConstraints[$0] },
+                getCellValue: { (col: $1, row: $0, value: $2) },
+                getLineCount: { self.rows },
+                getDescription: { "Row" })
+        }
+    }
+    
+    var columnHelper: LineHelper {
+        get {
+            return LineHelper(getLine: { $0.column($1) },
+                getRules: { self.columnConstraints[$0] },
+                getCellValue: { (col: $0, row: $1, value: $2) },
+                getLineCount: { self.columns },
+                getDescription: { "Column" })
+        }
+    }
+    
     /*
     let rows = 10
     let columns = 5
@@ -132,5 +154,6 @@ class PuzzleContext {
             (20, 21),
             (21, 21),
     ]
+    
 }
 

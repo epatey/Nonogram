@@ -18,13 +18,13 @@ class LineSolver {
             for rowNumber in 0 ..< context.rows {
                 currentBestSolution = lineOverlap(rowNumber,
                                                   currentBestSolution: currentBestSolution,
-                                                  lineGetter: currentBestSolution.rowHelper)
+                                                  lineGetter: context.rowHelper)
             }
 
             for colNumber in 0 ..< context.columns {
                 currentBestSolution = lineOverlap(colNumber,
                                                   currentBestSolution: currentBestSolution,
-                                                  lineGetter: currentBestSolution.columnHelper)
+                                                  lineGetter: context.columnHelper)
             }
 
             // knownCount = self.knownCellCount(context.mustBe)
@@ -44,7 +44,7 @@ class LineSolver {
     private static func lineOverlap(lineNumber: Int,
                                     currentBestSolution: PartialSolution,
                                     lineGetter: LineHelper) -> PartialSolution {
-        let oldLine = lineGetter.getLine(lineNumber: lineNumber)
+        let oldLine = lineGetter.getLine(partialSolution: currentBestSolution, lineNumber: lineNumber)
         if oldLine.complete {
             return currentBestSolution
         }

@@ -15,8 +15,8 @@ class LineBacktracker {
         var knownCount = currentBest.knownCellCount()
 
         while (true) {
-            currentBest = findLineSolutions(currentBest, lineGetter: currentBest.rowHelper)
-            currentBest = findLineSolutions(currentBest, lineGetter: currentBest.columnHelper)
+            currentBest = findLineSolutions(currentBest, lineGetter: context.rowHelper)
+            currentBest = findLineSolutions(currentBest, lineGetter: context.columnHelper)
             let newKnownCount = currentBest.knownCellCount()
 
             print("Line Backtracker computed \(newKnownCount - knownCount) known cells. (\(newKnownCount) out of \(context.rows * context.columns))")
@@ -33,25 +33,27 @@ class LineBacktracker {
 
     private static func findLineSolutions(partialSolution: PartialSolution,
                                           lineGetter: LineHelper) -> PartialSolution {
-//        let lock: AnyObject = Int(0)
+        let lock: AnyObject = Int(0)
         let count = lineGetter.getLineCount()
         var solutions = [[BacktrackCandidate]](count: count, repeatedValue: [])
-        //        dispatch_apply(count, dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-        //            lineNum -> Void in
-
-
         var currentSolution = partialSolution
-        for lineNum in 0 ..< count {
-            let line = lineGetter.getLine(lineNumber: lineNum)
+        dispatch_apply(count, dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+            lineNum -> Void in
+//        for lineNum in 0 ..< count {
+
+            objc_sync_enter(lock)
+            let line = lineGetter.getLine(partialSolution: currentSolution, lineNumber: lineNum)
+            objc_sync_exit(lock)
+
             if line.complete {
-                continue
+//                continue
+                return
             }
 
             let lineRules = lineGetter.getRules(lineNumber: lineNum)
             let root = LineCandidate(partialLine: line, lineRules: lineRules)
             let lineSolutions = Backtracker.solve(root)!
 
-            //            objc_sync_enter(lock)
             solutions[lineNum] = lineSolutions
 
             if (lineSolutions.count == 1) {
@@ -62,10 +64,11 @@ class LineBacktracker {
 
                 let ncv = line.newCellValues(partialLine, lineNumber: lineNum, cellValueBuilder: lineGetter.getCellValue)
                 if (ncv != nil) {
+                    objc_sync_enter(lock)
                     currentSolution = currentSolution.addCellValues(ncv)
+                    objc_sync_exit(lock)
                 }
             }
-            //            objc_sync_exit(lock)
 
             print("\(lineGetter.getDescription()) \(lineNum) has \(lineSolutions.count) solutions")
         }
