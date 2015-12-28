@@ -304,15 +304,3 @@ class LineSolver {
     }
 
 }
-
-extension SequenceType {
-    func aggregate<T>(initial: T, combine: (accumulator:T, element:Generator.Element) -> T) -> [T] {
-        var accumulator = initial
-        return map {
-            e in
-            accumulator = combine(accumulator: accumulator, element: e)
-            return accumulator
-        }
-    }
-}
-

@@ -103,21 +103,3 @@ class PartialSolution {
     }
 }
 
-
-extension Array {
-    func groupBy<U>(groupingFunction group: (Element) -> U) -> [U:Array] {
-        var result = [U: Array]()
-
-        for item in self {
-            let groupKey = group(item)
-            var dictValue = result[groupKey] ?? []
-
-            // TODO: I still don't quite get the immutability rules of nested collections.
-            // when I simply mutated the dictValue in place and didn't re-assign it, it was hosed
-            dictValue.append(item)
-            result[groupKey] = dictValue
-        }
-
-        return result
-    }
-}
