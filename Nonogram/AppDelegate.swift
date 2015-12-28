@@ -17,17 +17,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         let context = PuzzleContext()
 
-        var currentBest = PartialSolution(numRows: context.rows,
-                numColumns: context.columns,
-                newValues: context.knownCells.map() {
-                    ($0, $1, true)
-                })
-
+        var currentBest = PartialSolution(context: context)
 
         while (true) {
-            currentBest = LineSolver.execute(context, partialSolution: currentBest)
+            currentBest = LineSolver.execute(currentBest)
 
-            currentBest = LineBacktracker.execute(context, partialSolution: currentBest)
+            currentBest = LineBacktracker.execute(currentBest)
         }
 
         /*

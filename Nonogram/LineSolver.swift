@@ -6,8 +6,9 @@
 import Foundation
 
 class LineSolver {
-    static func execute(context: PuzzleContext, partialSolution: PartialSolution) -> PartialSolution {
+    static func execute(partialSolution: PartialSolution) -> PartialSolution {
         var currentBestSolution = partialSolution
+        let context = partialSolution.context
 
         currentBestSolution.dump()
 
@@ -15,11 +16,15 @@ class LineSolver {
         while (true) {
             let beforeCount = currentBestSolution.knownCellCount()
             for rowNumber in 0 ..< context.rows {
-                currentBestSolution = rowOverlap(rowNumber, currentBestSolution: currentBestSolution, context: context)
+                currentBestSolution = lineOverlap(rowNumber,
+                                                  currentBestSolution: currentBestSolution,
+                                                  lineGetter: currentBestSolution.rowHelper)
             }
 
             for colNumber in 0 ..< context.columns {
-                currentBestSolution = columnOverlap(colNumber, currentBestSolution: currentBestSolution, context: context)
+                currentBestSolution = lineOverlap(colNumber,
+                                                  currentBestSolution: currentBestSolution,
+                                                  lineGetter: currentBestSolution.columnHelper)
             }
 
             // knownCount = self.knownCellCount(context.mustBe)
@@ -36,23 +41,21 @@ class LineSolver {
         return currentBestSolution
     }
 
-    private static func lineOverlapLearnings(line: PartialLine, rules: [Int], lineNumber: Int, isRow: Bool) -> [CellValue]? {
+    private static func lineOverlap(lineNumber: Int,
+                                    currentBestSolution: PartialSolution,
+                                    lineGetter: LineHelper) -> PartialSolution {
+        let oldLine = lineGetter.getLine(lineNumber: lineNumber)
+        let rules = lineGetter.getRules(lineNumber: lineNumber)
+        let changes = lineOverlapLearnings(oldLine, rules: rules, lineNumber: lineNumber, cellValueBuilder: lineGetter.getCellValue)
+        return currentBestSolution.addCellValues(changes)
+    }
+
+    private static func lineOverlapLearnings(line: PartialLine,
+                                             rules: [Int],
+                                             lineNumber: Int,
+                                             cellValueBuilder: CellValueBuilder) -> [CellValue]? {
         let newLine = LineSolver.computeLineOverlap(line, rules: rules)
-        return line.newCellValues(newLine, lineNumber: lineNumber, isRow: isRow)
-    }
-
-    private static func rowOverlap(rowNumber: Int, currentBestSolution: PartialSolution, context: PuzzleContext) -> PartialSolution {
-        let oldLine = currentBestSolution.row(rowNumber)
-        let rules = context.rowConstraints[rowNumber]
-        let changes = lineOverlapLearnings(oldLine, rules: rules, lineNumber: rowNumber, isRow: true)
-        return currentBestSolution.addCellValues(changes)
-    }
-
-    private static func columnOverlap(columnNumber: Int, currentBestSolution: PartialSolution, context: PuzzleContext) -> PartialSolution {
-        let oldLine = currentBestSolution.column(columnNumber)
-        let rules = context.columnConstraints[columnNumber]
-        let changes = lineOverlapLearnings(oldLine, rules: rules, lineNumber: columnNumber, isRow: false)
-        return currentBestSolution.addCellValues(changes)
+        return line.newCellValues(newLine, lineNumber: lineNumber, cellValueBuilder: cellValueBuilder)
     }
 
     private static func computeLineOverlap(line: PartialLine, rules: [Int]) -> PartialLine {

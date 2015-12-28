@@ -9,13 +9,14 @@
 import Foundation
 
 class LineBacktracker {
-    static func execute(context: PuzzleContext, partialSolution: PartialSolution) -> PartialSolution {
+    static func execute(partialSolution: PartialSolution) -> PartialSolution {
+        let context = partialSolution.context
         var currentBest = partialSolution
         var knownCount = currentBest.knownCellCount()
 
         while (true) {
-            currentBest = findLineSolutions(context, partialSolution: currentBest, rowAspect: true)
-            currentBest = findLineSolutions(context, partialSolution: currentBest, rowAspect: false)
+            currentBest = findLineSolutions(currentBest, lineGetter: currentBest.rowHelper)
+            currentBest = findLineSolutions(currentBest, lineGetter: currentBest.columnHelper)
             let newKnownCount = currentBest.knownCellCount()
 
             print("Line Backtracker computed \(newKnownCount - knownCount) known cells. (\(newKnownCount) out of \(context.rows * context.columns))")
@@ -30,9 +31,10 @@ class LineBacktracker {
         return currentBest
     }
 
-    private static func findLineSolutions(context: PuzzleContext, partialSolution: PartialSolution, rowAspect: Bool) -> PartialSolution {
-        let lock: AnyObject = Int(0)
-        let count = rowAspect ? context.rows : context.columns
+    private static func findLineSolutions(partialSolution: PartialSolution,
+                                          lineGetter: LineHelper) -> PartialSolution {
+//        let lock: AnyObject = Int(0)
+        let count = lineGetter.getLineCount()
         var solutions = [[BacktrackCandidate]](count: count, repeatedValue: [])
         //        dispatch_apply(count, dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
         //            lineNum -> Void in
@@ -40,7 +42,7 @@ class LineBacktracker {
 
         var currentSolution = partialSolution
         for lineNum in 0 ..< count {
-            let line: PartialLine = rowAspect ? currentSolution.row(lineNum) : currentSolution.column(lineNum)
+            let line = lineGetter.getLine(lineNumber: lineNum)
             let lineMissing = line.reduce(0) {
                 $0 + ($1 == nil ? 1 : 0)
             }
@@ -48,7 +50,7 @@ class LineBacktracker {
                 continue
             }
 
-            let lineRules = rowAspect ? context.rowConstraints[lineNum] : context.columnConstraints[lineNum]
+            let lineRules = lineGetter.getRules(lineNumber: lineNum)
             let root = LineCandidate(partialLine: line, lineRules: lineRules)
             let lineSolutions = Backtracker.solve(root)!
 
@@ -61,28 +63,14 @@ class LineBacktracker {
                     $0
                 })
 
-                let ncv = line.newCellValues(partialLine, lineNumber: lineNum, isRow: rowAspect)
+                let ncv = line.newCellValues(partialLine, lineNumber: lineNum, cellValueBuilder: lineGetter.getCellValue)
                 if (ncv != nil) {
                     currentSolution = currentSolution.addCellValues(ncv)
                 }
-
-                /*
-                if (rowAspect) {
-                context.mustBe[lineNum] = lineSolution.map() {
-                $0
-                }
-                }
-                else {
-                var i = 0
-                for knownCell in lineSolution {
-                context.mustBe[i++][lineNum] = knownCell
-                }
-                }
-                */
             }
             //            objc_sync_exit(lock)
 
-            print("\(rowAspect ? "Row" : "Column") \(lineNum) has \(lineSolutions.count) solutions")
+            print("\(lineGetter.getDescription()) \(lineNum) has \(lineSolutions.count) solutions")
         }
 
         return currentSolution

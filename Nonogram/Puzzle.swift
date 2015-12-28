@@ -9,16 +9,15 @@
 import Foundation
 
 typealias CellValue = (col:Int, row:Int, value:Bool)
+typealias CellValueBuilder = (lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue
 
-// TODO: These should go into some sort of polymorphic cell vs column helper
-func rowCell(lineNumber: Int, lineOffset: Int, value: Bool) -> CellValue {
-    return (col: lineOffset, row: lineNumber, value: value)
+struct LineHelper {
+    let getLine: (lineNumber:Int) -> PartialLine
+    let getRules: (lineNumber:Int) -> [Int]
+    let getCellValue: CellValueBuilder
+    let getLineCount: () -> Int
+    let getDescription: () -> String
 }
-
-func columnCell(lineNumber: Int, lineOffset: Int, value: Bool) -> CellValue {
-    return (col: lineNumber, row: lineOffset, value: value)
-}
-
 
 class PuzzleContext {
     /*
@@ -49,10 +48,10 @@ class PuzzleContext {
     ]
     */
 
-var rowsSolutions: [[BacktrackCandidate]] = []
+    var rowsSolutions: [[BacktrackCandidate]] = []
 
-    let rows           = 25
-    let columns        = 25
+    let rows = 25
+    let columns = 25
     let rowConstraints = [
             [7, 3, 1, 1, 7],
             [1, 1, 2, 2, 1, 1],

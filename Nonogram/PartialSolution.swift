@@ -7,13 +7,41 @@ import Foundation
 
 class PartialSolution {
     private let rows: [PartialLine]
+    let context: PuzzleContext
 
-    init(numRows: Int, numColumns: Int, newValues: [CellValue]) {
-        rows = PartialSolution.addKnownCells(numRows, columns: numColumns, inputCells: nil, cellsToAdd: newValues)
+    init(context: PuzzleContext) {
+        rows = PartialSolution.addKnownCells(context.rows,
+                                             columns: context.columns,
+                                             inputCells: nil,
+                                             cellsToAdd: context.knownCells.map() {
+                                                 ($0, $1, true)
+                                             })
+        self.context = context
+    }
+
+    var rowHelper: LineHelper {
+        get {
+            return LineHelper(getLine: { self.row($0) },
+                              getRules: { self.context.rowConstraints[$0] },
+                              getCellValue: { (col: $1, row: $0, value: $2) },
+                              getLineCount: { self.context.rows },
+                              getDescription: { "Row" })
+        }
+    }
+
+    var columnHelper: LineHelper {
+        get {
+            return LineHelper(getLine: { self.column($0) },
+                              getRules: { self.context.columnConstraints[$0] },
+                              getCellValue: { (col: $0, row: $1, value: $2) },
+                              getLineCount: { self.context.columns },
+                              getDescription: { "Column" })
+        }
     }
 
     private init(numRows: Int, numColumns: Int, copyFrom: PartialSolution, newValues: [CellValue]) {
         rows = PartialSolution.addKnownCells(numRows, columns: numColumns, inputCells: copyFrom.rows, cellsToAdd: newValues)
+        context = copyFrom.context
     }
 
     func row(row: Int) -> PartialLine {
