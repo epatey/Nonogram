@@ -34,6 +34,12 @@ class PartialLine: SequenceType {
         }
     }
 
+    var complete: Bool {
+        get {
+            return cells.filter({ $0 == nil }).isEmpty
+        }
+    }
+
     func reverse() -> PartialLine {
         return PartialLine(cells: cells.reverse())
     }

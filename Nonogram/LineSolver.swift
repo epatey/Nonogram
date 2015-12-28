@@ -45,6 +45,9 @@ class LineSolver {
                                     currentBestSolution: PartialSolution,
                                     lineGetter: LineHelper) -> PartialSolution {
         let oldLine = lineGetter.getLine(lineNumber: lineNumber)
+        if oldLine.complete {
+            return currentBestSolution
+        }
         let rules = lineGetter.getRules(lineNumber: lineNumber)
         let changes = lineOverlapLearnings(oldLine, rules: rules, lineNumber: lineNumber, cellValueBuilder: lineGetter.getCellValue)
         return currentBestSolution.addCellValues(changes)

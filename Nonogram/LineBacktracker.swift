@@ -43,10 +43,7 @@ class LineBacktracker {
         var currentSolution = partialSolution
         for lineNum in 0 ..< count {
             let line = lineGetter.getLine(lineNumber: lineNum)
-            let lineMissing = line.reduce(0) {
-                $0 + ($1 == nil ? 1 : 0)
-            }
-            if (lineMissing == 0) {
+            if line.complete {
                 continue
             }
 
