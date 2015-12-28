@@ -23,6 +23,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             currentBest = LineSolver.execute(currentBest)
 
             currentBest = LineBacktracker.execute(currentBest)
+            
+            if (currentBest.knownCellCount() == context.rows * context.columns) {
+                break;
+            }
         }
 
         /*
