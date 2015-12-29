@@ -20,10 +20,9 @@
 		07330A9C1C308B86002F35C7 /* PartialLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07330A9A1C308B86002F35C7 /* PartialLine.swift */; };
 		07330A9E1C308C18002F35C7 /* ColumnSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07330A9D1C308C18002F35C7 /* ColumnSequence.swift */; };
 		07330A9F1C308C18002F35C7 /* ColumnSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07330A9D1C308C18002F35C7 /* ColumnSequence.swift */; };
-		07330AA11C316350002F35C7 /* SequenceType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07330AA01C316350002F35C7 /* SequenceType+Extensions.swift */; };
-		07330AA21C316350002F35C7 /* SequenceType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07330AA01C316350002F35C7 /* SequenceType+Extensions.swift */; };
-		07330AA41C316E90002F35C7 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07330AA31C316E90002F35C7 /* Array+Extensions.swift */; };
-		07330AA51C316E90002F35C7 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07330AA31C316E90002F35C7 /* Array+Extensions.swift */; };
+		07F145E31C3247D20045D44D /* BTSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07F145E21C3247D20045D44D /* BTSwift.framework */; };
+		07F145E41C3247D20045D44D /* BTSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 07F145E21C3247D20045D44D /* BTSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		07F145E81C3248140045D44D /* BTSwift.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 07F145E71C3248140045D44D /* BTSwift.framework.dSYM */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +34,30 @@
 			remoteInfo = Nonogram;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		07F145E51C3247D20045D44D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				07F145E41C3247D20045D44D /* BTSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07F145E61C3247F90045D44D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				07F145E81C3248140045D44D /* BTSwift.framework.dSYM in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		07330A721C30881E002F35C7 /* Nonogram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nonogram.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,8 +75,8 @@
 		07330A941C308879002F35C7 /* Puzzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Puzzle.swift; path = ../../../dev/nonogram/Nonogram/Puzzle.swift; sourceTree = "<group>"; };
 		07330A9A1C308B86002F35C7 /* PartialLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartialLine.swift; sourceTree = "<group>"; };
 		07330A9D1C308C18002F35C7 /* ColumnSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColumnSequence.swift; sourceTree = "<group>"; };
-		07330AA01C316350002F35C7 /* SequenceType+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SequenceType+Extensions.swift"; sourceTree = "<group>"; };
-		07330AA31C316E90002F35C7 /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
+		07F145E21C3247D20045D44D /* BTSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BTSwift.framework; path = Carthage/Build/Mac/BTSwift.framework; sourceTree = "<group>"; };
+		07F145E71C3248140045D44D /* BTSwift.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = BTSwift.framework.dSYM; path = Carthage/Build/Mac/BTSwift.framework.dSYM; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07F145E31C3247D20045D44D /* BTSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +101,8 @@
 		07330A691C30881E002F35C7 = {
 			isa = PBXGroup;
 			children = (
+				07F145E71C3248140045D44D /* BTSwift.framework.dSYM */,
+				07F145E21C3247D20045D44D /* BTSwift.framework */,
 				07330A741C30881E002F35C7 /* Nonogram */,
 				07330A841C30881E002F35C7 /* NonogramTests */,
 				07330A731C30881E002F35C7 /* Products */,
@@ -106,8 +132,6 @@
 				07330A9A1C308B86002F35C7 /* PartialLine.swift */,
 				07330A931C308879002F35C7 /* PartialSolution.swift */,
 				07330A941C308879002F35C7 /* Puzzle.swift */,
-				07330AA01C316350002F35C7 /* SequenceType+Extensions.swift */,
-				07330AA31C316E90002F35C7 /* Array+Extensions.swift */,
 			);
 			path = Nonogram;
 			sourceTree = "<group>";
@@ -131,6 +155,8 @@
 				07330A6E1C30881E002F35C7 /* Sources */,
 				07330A6F1C30881E002F35C7 /* Frameworks */,
 				07330A701C30881E002F35C7 /* Resources */,
+				07F145E51C3247D20045D44D /* Embed Frameworks */,
+				07F145E61C3247F90045D44D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -221,8 +247,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				07330A961C308879002F35C7 /* LineBacktracker.swift in Sources */,
-				07330AA41C316E90002F35C7 /* Array+Extensions.swift in Sources */,
-				07330AA11C316350002F35C7 /* SequenceType+Extensions.swift in Sources */,
 				07330A981C308879002F35C7 /* PartialSolution.swift in Sources */,
 				07330A761C30881E002F35C7 /* AppDelegate.swift in Sources */,
 				07330A9B1C308B86002F35C7 /* PartialLine.swift in Sources */,
@@ -238,9 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07330A861C30881E002F35C7 /* NonogramTests.swift in Sources */,
-				07330AA51C316E90002F35C7 /* Array+Extensions.swift in Sources */,
 				07330A9C1C308B86002F35C7 /* PartialLine.swift in Sources */,
-				07330AA21C316350002F35C7 /* SequenceType+Extensions.swift in Sources */,
 				07330A9F1C308C18002F35C7 /* ColumnSequence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,6 +374,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = Nonogram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bouldertop.Nonogram;
@@ -364,6 +390,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = Nonogram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bouldertop.Nonogram;

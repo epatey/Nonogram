@@ -1,0 +1,3 @@
+[submodule "Carthage/Checkouts/BTSwift"]
+	url = https://github.com/epatey/BTSwift.git
+	path = Carthage/Checkouts/BTSwift

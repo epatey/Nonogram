@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import BTSwift
 
 class LineSolver {
     static func execute(partialSolution: PartialSolution) -> PartialSolution {

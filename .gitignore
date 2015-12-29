@@ -21,4 +21,5 @@ run
 *.orig
 log/
 *.hmap
-
+Carthage.pkg
+Carthage/Build
