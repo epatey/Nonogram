@@ -26,6 +26,7 @@ class NonogramTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    /*
     func testComputePackedLine() {
         let line:[Bool?] = [nil, nil, false, nil, nil, nil, nil, false, nil]
         let rules = [3, 1]
@@ -67,6 +68,7 @@ class NonogramTests: XCTestCase {
         XCTAssertEqual(p.runAtOffset(4)!.index, 1)
         XCTAssertNil(p.runAtOffset(5))
     }
+*/
 
     // computeLineOverlap
 }
