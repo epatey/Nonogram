@@ -23,6 +23,9 @@
 		07F145E31C3247D20045D44D /* BTSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07F145E21C3247D20045D44D /* BTSwift.framework */; };
 		07F145E41C3247D20045D44D /* BTSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 07F145E21C3247D20045D44D /* BTSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		07F145E81C3248140045D44D /* BTSwift.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 07F145E71C3248140045D44D /* BTSwift.framework.dSYM */; };
+		07F146CD1C33662A0045D44D /* SWXMLHash.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 07F146CC1C33662A0045D44D /* SWXMLHash.framework.dSYM */; };
+		07F146CF1C3366390045D44D /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07F146CE1C3366390045D44D /* SWXMLHash.framework */; };
+		07F146D01C3366390045D44D /* SWXMLHash.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 07F146CE1C3366390045D44D /* SWXMLHash.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				07F146D01C3366390045D44D /* SWXMLHash.framework in Embed Frameworks */,
 				07F145E41C3247D20045D44D /* BTSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -54,6 +58,7 @@
 			dstSubfolderSpec = 16;
 			files = (
 				07F145E81C3248140045D44D /* BTSwift.framework.dSYM in CopyFiles */,
+				07F146CD1C33662A0045D44D /* SWXMLHash.framework.dSYM in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +82,8 @@
 		07330A9D1C308C18002F35C7 /* ColumnSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColumnSequence.swift; sourceTree = "<group>"; };
 		07F145E21C3247D20045D44D /* BTSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BTSwift.framework; path = Carthage/Build/Mac/BTSwift.framework; sourceTree = "<group>"; };
 		07F145E71C3248140045D44D /* BTSwift.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = BTSwift.framework.dSYM; path = Carthage/Build/Mac/BTSwift.framework.dSYM; sourceTree = "<group>"; };
+		07F146CC1C33662A0045D44D /* SWXMLHash.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SWXMLHash.framework.dSYM; path = Carthage/Build/Mac/SWXMLHash.framework.dSYM; sourceTree = "<group>"; };
+		07F146CE1C3366390045D44D /* SWXMLHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SWXMLHash.framework; path = Carthage/Build/Mac/SWXMLHash.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07F146CF1C3366390045D44D /* SWXMLHash.framework in Frameworks */,
 				07F145E31C3247D20045D44D /* BTSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +109,8 @@
 		07330A691C30881E002F35C7 = {
 			isa = PBXGroup;
 			children = (
+				07F146CE1C3366390045D44D /* SWXMLHash.framework */,
+				07F146CC1C33662A0045D44D /* SWXMLHash.framework.dSYM */,
 				07F145E71C3248140045D44D /* BTSwift.framework.dSYM */,
 				07F145E21C3247D20045D44D /* BTSwift.framework */,
 				07330A741C30881E002F35C7 /* Nonogram */,

@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!DOCTYPE pbn SYSTEM "http://webpbn.com/pbn-0.3.dtd">
+<puzzleset>
+<source>webpbn.com</source>
+
+<puzzle type="grid" defaultcolor="green">
+<title>new york sack exchange</title>
+<author>Phil Cudlob</author>
+<authorid>redskinsfan21</authorid>
+<copyright>(c) Copyright 2008 by Phil Cudlob</copyright>
+<id>#2218 (v.2)</id>
+<description>new york jets. Looks best while standing around 6 feet away from screen</description>
+<note>published,definitely unique,definitely line/color solvable</note>
+
+<color name="white" char=".">FFFFFF</color>
+<color name="green" char="%">00B000</color>
+
+<clues type="columns">
+<line><count>6</count></line>
+<line><count>10</count></line>
+<line><count>14</count></line>
+<line><count>16</count></line>
+<line><count>18</count></line>
+<line><count>20</count></line>
+<line><count>22</count></line>
+<line><count>23</count></line>
+<line><count>24</count></line>
+<line><count>13</count><count>8</count></line>
+<line><count>12</count><count>9</count></line>
+<line><count>13</count><count>9</count></line>
+<line><count>4</count><count>6</count><count>3</count><count>5</count></line>
+<line><count>5</count><count>1</count><count>6</count><count>1</count><count>2</count><count>1</count><count>5</count></line>
+<line><count>5</count><count>1</count><count>9</count><count>1</count><count>5</count></line>
+<line><count>6</count><count>1</count><count>8</count><count>4</count><count>6</count></line>
+<line><count>6</count><count>1</count><count>4</count><count>6</count></line>
+<line><count>6</count><count>6</count><count>5</count><count>6</count></line>
+<line><count>7</count><count>4</count><count>1</count><count>7</count></line>
+<line><count>7</count><count>3</count><count>5</count><count>1</count><count>7</count></line>
+<line><count>7</count><count>3</count><count>7</count><count>1</count><count>7</count></line>
+<line><count>8</count><count>2</count><count>2</count><count>1</count><count>4</count><count>9</count></line>
+<line><count>10</count><count>4</count><count>14</count></line>
+<line><count>12</count><count>3</count><count>14</count></line>
+<line><count>14</count><count>14</count></line>
+<line><count>14</count><count>13</count></line>
+<line><count>8</count><count>3</count><count>1</count><count>1</count><count>2</count><count>7</count></line>
+<line><count>8</count><count>1</count><count>3</count><count>1</count><count>2</count><count>7</count></line>
+<line><count>8</count><count>1</count><count>3</count><count>1</count><count>1</count><count>2</count><count>7</count></line>
+<line><count>9</count><count>1</count><count>2</count><count>3</count><count>6</count></line>
+<line><count>9</count><count>5</count><count>1</count><count>4</count><count>1</count><count>1</count><count>6</count></line>
+<line><count>9</count><count>5</count><count>7</count><count>6</count></line>
+<line><count>9</count><count>5</count><count>7</count><count>1</count><count>1</count><count>6</count></line>
+<line><count>9</count><count>1</count><count>2</count><count>1</count><count>1</count><count>6</count></line>
+<line><count>9</count><count>1</count><count>4</count><count>4</count><count>1</count><count>6</count></line>
+<line><count>9</count><count>2</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>6</count></line>
+<line><count>9</count><count>3</count><count>2</count><count>3</count><count>6</count></line>
+<line><count>8</count><count>5</count><count>2</count><count>7</count></line>
+<line><count>8</count><count>5</count><count>4</count><count>8</count></line>
+<line><count>8</count><count>1</count><count>3</count><count>6</count><count>8</count></line>
+<line><count>8</count><count>1</count><count>1</count><count>7</count><count>1</count><count>8</count></line>
+<line><count>8</count><count>1</count><count>2</count><count>1</count><count>8</count></line>
+<line><count>8</count><count>3</count><count>11</count><count>8</count></line>
+<line><count>14</count><count>4</count><count>6</count><count>8</count></line>
+<line><count>13</count><count>5</count><count>5</count><count>8</count></line>
+<line><count>7</count><count>2</count><count>1</count><count>1</count><count>7</count></line>
+<line><count>7</count><count>1</count><count>1</count><count>1</count><count>1</count><count>3</count><count>1</count><count>7</count></line>
+<line><count>7</count><count>2</count><count>1</count><count>1</count><count>3</count><count>1</count><count>7</count></line>
+<line><count>6</count><count>3</count><count>1</count><count>4</count><count>7</count></line>
+<line><count>6</count><count>2</count><count>2</count><count>1</count><count>12</count></line>
+<line><count>5</count><count>1</count><count>2</count><count>1</count><count>12</count></line>
+<line><count>5</count><count>1</count><count>3</count><count>1</count><count>11</count></line>
+<line><count>5</count><count>1</count><count>3</count><count>1</count><count>12</count></line>
+<line><count>4</count><count>1</count><count>4</count><count>1</count><count>12</count></line>
+<line><count>4</count><count>21</count></line>
+<line><count>26</count></line>
+<line><count>26</count></line>
+<line><count>24</count></line>
+<line><count>23</count></line>
+<line><count>22</count></line>
+<line><count>20</count></line>
+<line><count>18</count></line>
+<line><count>15</count></line>
+<line><count>12</count></line>
+<line><count>9</count></line>
+<line><count>4</count></line>
+</clues>
+
+<clues type="rows">
+<line><count>8</count></line>
+<line><count>22</count></line>
+<line><count>30</count></line>
+<line><count>35</count></line>
+<line><count>40</count></line>
+<line><count>44</count></line>
+<line><count>48</count></line>
+<line><count>50</count></line>
+<line><count>54</count></line>
+<line><count>7</count><count>5</count><count>2</count><count>6</count></line>
+<line><count>8</count><count>8</count><count>4</count><count>15</count><count>2</count><count>8</count><count>7</count></line>
+<line><count>9</count><count>5</count><count>3</count><count>3</count><count>4</count><count>2</count><count>3</count><count>7</count></line>
+<line><count>14</count><count>5</count><count>6</count><count>3</count><count>1</count><count>4</count><count>6</count><count>1</count><count>12</count></line>
+<line><count>14</count><count>2</count><count>5</count><count>3</count><count>2</count><count>3</count><count>5</count><count>1</count><count>15</count></line>
+<line><count>15</count><count>1</count><count>6</count><count>3</count><count>2</count><count>4</count><count>3</count><count>1</count><count>16</count></line>
+<line><count>15</count><count>1</count><count>2</count><count>2</count><count>1</count><count>12</count></line>
+<line><count>16</count><count>2</count><count>1</count><count>1</count><count>11</count></line>
+<line><count>16</count><count>2</count><count>1</count><count>3</count><count>2</count><count>3</count><count>1</count><count>11</count></line>
+<line><count>10</count><count>2</count><count>2</count><count>2</count><count>2</count><count>3</count><count>16</count></line>
+<line><count>9</count><count>2</count><count>1</count><count>2</count><count>1</count><count>1</count><count>3</count><count>12</count></line>
+<line><count>9</count><count>2</count><count>2</count><count>3</count><count>3</count><count>1</count><count>2</count><count>3</count><count>2</count><count>12</count></line>
+<line><count>9</count><count>2</count><count>3</count><count>2</count><count>1</count><count>13</count></line>
+<line><count>8</count><count>2</count><count>3</count><count>3</count><count>2</count><count>13</count></line>
+<line><count>8</count><count>1</count><count>6</count><count>7</count><count>7</count><count>3</count><count>19</count></line>
+<line><count>12</count><count>3</count><count>7</count><count>3</count><count>5</count><count>3</count><count>18</count></line>
+<line><count>12</count><count>3</count><count>8</count><count>3</count><count>3</count><count>17</count></line>
+<line><count>10</count><count>3</count><count>6</count><count>3</count><count>15</count></line>
+<line><count>8</count><count>8</count><count>4</count><count>2</count><count>2</count><count>2</count><count>8</count><count>13</count></line>
+<line><count>8</count><count>5</count><count>1</count><count>1</count><count>13</count></line>
+<line><count>20</count><count>2</count><count>2</count><count>2</count><count>21</count></line>
+<line><count>20</count><count>21</count></line>
+<line><count>20</count><count>20</count></line>
+<line><count>45</count></line>
+<line><count>40</count></line>
+<line><count>36</count></line>
+<line><count>30</count></line>
+<line><count>24</count></line>
+<line><count>12</count></line>
+</clues>
+
+</puzzle>
+</puzzleset>

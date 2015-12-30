@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SWXMLHash
 
 typealias CellValue = (col:Int, row:Int, value:Bool)
 typealias CellValueBuilder = (lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue
@@ -20,6 +21,28 @@ struct LineHelper {
 }
 
 class PuzzleContext {
+    let rowConstraints:[[Int]]
+    let columnConstraints:[[Int]]
+    let rows:Int
+    let columns:Int
+    let knownCells: [(col:Int, row:Int)] = [
+    ]
+
+    
+    init(puzzlePath: String) {
+        let x = try! String(contentsOfFile: puzzlePath)
+        let xml = SWXMLHash.parse(x)
+        let puzzle = xml["puzzleset"]["puzzle"][0]
+        let rowRulesXml = try! puzzle["clues"].withAttr("type", "rows").children
+        rowConstraints = rowRulesXml.map() {$0.children.map() {Int($0.element!.text!)!}}
+        let colRulesXml = try! puzzle["clues"].withAttr("type", "columns").children
+        columnConstraints = colRulesXml.map() {$0.children.map() {Int($0.element!.text!)!}}
+        
+        rows = rowConstraints.count
+        columns = columnConstraints.count
+    }
+    
+    
     // TODO: Seems like I'm trying too hard here. Just trying to use the strategy pattern. I don't
     // think I've got it clean enough yet. Struggled trying to make these let's rather than var lazy's
     var rowHelper: LineHelper {
@@ -72,6 +95,7 @@ class PuzzleContext {
 
     var rowsSolutions: [[BacktrackCandidate]] = []
 
+    /*
     let rows = 25
     let columns = 25
     let rowConstraints = [
@@ -154,6 +178,7 @@ class PuzzleContext {
             (20, 21),
             (21, 21),
     ]
+*/
     
 }
 

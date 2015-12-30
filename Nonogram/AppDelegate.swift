@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        let context = PuzzleContext()
+        let context = PuzzleContext(puzzlePath: "/Users/Eric/dev/nonogram/Puzzles/5236.xml")
 
         var currentBest = PartialSolution(context: context)
 
@@ -28,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 break;
             }
         }
-
+        
         /*
         var rowSols:[[BacktrackCandidate]] = []
         let colSols:[[BacktrackCandidate]]

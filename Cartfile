@@ -1,1 +1,2 @@
 github "epatey/BTSwift" ~> 0.0.1
+github "drmohundro/SWXMLHash"

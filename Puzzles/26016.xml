@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!DOCTYPE pbn SYSTEM "http://webpbn.com/pbn-0.3.dtd">
+<puzzleset>
+<source>webpbn.com</source>
+
+<puzzle type="grid" defaultcolor="black">
+<title>Cross and Swirl</title>
+<author>Samantha Adams</author>
+<authorid>sammylizzadams</authorid>
+<copyright>(c) Copyright 2015 by Samantha Adams</copyright>
+<id>#26016 (v.1)</id>
+<description></description>
+<note>published,definitely unique,definitely line/color solvable</note>
+
+<color name="white" char=".">FFFFFF</color>
+<color name="black" char="X">000000</color>
+
+<clues type="columns">
+<line><count>50</count></line>
+<line><count>50</count></line>
+<line><count>2</count></line>
+<line><count>47</count><count>2</count></line>
+<line><count>47</count><count>2</count></line>
+<line><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>47</count><count>2</count></line>
+<line><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>35</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>35</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>7</count><count>9</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>29</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>29</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>7</count><count>29</count><count>9</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>15</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>15</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>7</count><count>9</count><count>9</count><count>9</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>9</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>9</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>7</count><count>9</count><count>9</count><count>9</count><count>9</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>7</count><count>9</count><count>19</count><count>9</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>19</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>19</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>7</count><count>9</count><count>9</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>25</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>25</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>7</count><count>39</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>39</count><count>2</count></line>
+<line><count>1</count><count>2</count><count>39</count><count>2</count></line>
+<line><count>7</count><count>2</count></line>
+<line><count>1</count><count>45</count></line>
+<line><count>1</count><count>45</count></line>
+</clues>
+
+<clues type="rows">
+<line><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count></line>
+<line><count>2</count><count>47</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>40</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>40</count></line>
+<line><count>2</count><count>9</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>34</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>34</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>9</count><count>34</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>20</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>20</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>9</count><count>9</count><count>9</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>14</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>14</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>9</count><count>9</count><count>14</count><count>9</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>7</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>7</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>9</count><count>9</count><count>7</count><count>9</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>10</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>10</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>9</count><count>24</count><count>9</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>24</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>2</count><count>24</count><count>2</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>9</count><count>9</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>30</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>30</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>44</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>2</count><count>44</count><count>2</count></line>
+<line><count>2</count><count>44</count><count>2</count></line>
+<line><count>2</count><count>2</count></line>
+<line><count>50</count></line>
+<line><count>50</count></line>
+</clues>
+
+</puzzle>
+</puzzleset>

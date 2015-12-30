@@ -1,3 +1,6 @@
 [submodule "Carthage/Checkouts/BTSwift"]
 	url = https://github.com/epatey/BTSwift.git
 	path = Carthage/Checkouts/BTSwift
+[submodule "Carthage/Checkouts/SWXMLHash"]
+	path = Carthage/Checkouts/SWXMLHash
+	url = https://github.com/drmohundro/SWXMLHash.git

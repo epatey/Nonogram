@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE pbn SYSTEM "http://webpbn.com/pbn-0.3.dtd">
+<puzzleset>
+<source>webpbn.com</source>
+
+<puzzle type="grid" defaultcolor="black">
+<title>A Dark Night...Episode # 3. .With a little help from my friends..thank you The Beatles </title>
+<author>Aldege Cholette</author>
+<authorid>aldege</authorid>
+<copyright>(c) Copyright 2012 by Aldege Cholette</copyright>
+<id>#20470 (v.1)</id>
+<description>My plan was to get Carl to follow Neil in my Diplomat and I would follow them in Carl&apos;s car. We had to disguise Carl with a hat and cigarette to look like me..&quot;Sorry Guy I can&apos;t do it&quot;..Why not Carl?..&quot;Cause I don&apos;t smoke&quot;..Oh for heavens sake Carl,you don&apos;t have to light the cigarette..&quot;Yeah,but it still taste yucky.&quot;..Fine we&apos;ll use a candy cigarette then..&quot;Ok,but I don&apos;t drive.&quot;..What do you mean you don&apos;t drive?,isn&apos;t that your car parked out back?..&quot;No that&apos;s my moms.&quot;..Crap,how come you never learned how to drive?..&quot;I don&apos;t know,I never really needed to.&quot;..How did you go out on dates with chicks?..&quot;I didn&apos;t.&quot;..I&apos;m not surprised..&quot;I&apos;ll do it,momma said.&quot;.. You will?..&quot;Sure,it&apos;s exciting&quot;..No momma,it&apos;s dangerous..&quot;Ahh dangerous,don&apos;t be silly.&quot;..Gee,thanks momma,I really appreciate it,try on this hat,and cigarette.It&apos;s perfect. Can we tame down that hairdo a bit though,and maybe put on a stronger harness for your endowment.</description>
+<note>published,definitely unique,may require moderate lookahead</note>
+
+<color name="white" char=".">FFFFFF</color>
+<color name="black" char="X">000000</color>
+
+<clues type="columns">
+<line><count>2</count><count>6</count></line>
+<line><count>1</count><count>3</count><count>3</count><count>3</count></line>
+<line><count>5</count><count>2</count><count>2</count><count>14</count></line>
+<line><count>1</count><count>4</count><count>4</count><count>10</count></line>
+<line><count>3</count><count>2</count><count>2</count><count>2</count><count>10</count></line>
+<line><count>1</count><count>3</count><count>3</count><count>1</count><count>4</count><count>2</count></line>
+<line><count>2</count><count>3</count><count>3</count><count>10</count></line>
+<line><count>6</count><count>3</count><count>1</count><count>2</count><count>1</count><count>10</count></line>
+<line><count>1</count><count>2</count><count>1</count><count>2</count><count>1</count><count>13</count></line>
+<line><count>1</count><count>1</count><count>3</count><count>2</count></line>
+<line><count>7</count></line>
+<line><count>10</count><count>7</count><count>2</count></line>
+<line><count>2</count><count>1</count><count>4</count><count>11</count></line>
+<line><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count></line>
+<line><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>4</count></line>
+<line><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count></line>
+<line><count>2</count><count>1</count><count>4</count><count>11</count></line>
+<line><count>10</count><count>7</count><count>2</count></line>
+<line><count>7</count></line>
+<line><count>2</count></line>
+<line><count>2</count><count>1</count><count>1</count><count>2</count><count>1</count></line>
+<line><count>1</count><count>1</count><count>2</count><count>1</count><count>2</count><count>1</count><count>2</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>6</count><count>3</count><count>1</count><count>1</count><count>2</count><count>7</count></line>
+<line><count>2</count><count>2</count><count>3</count><count>2</count><count>3</count><count>1</count><count>1</count></line>
+<line><count>3</count><count>1</count><count>3</count><count>2</count><count>1</count><count>5</count></line>
+<line><count>3</count><count>2</count><count>2</count><count>2</count><count>5</count></line>
+<line><count>1</count><count>3</count><count>4</count><count>1</count><count>1</count></line>
+<line><count>7</count><count>4</count><count>5</count><count>5</count></line>
+<line><count>2</count><count>1</count><count>3</count><count>2</count><count>2</count><count>3</count></line>
+<line><count>2</count><count>2</count><count>3</count><count>2</count></line>
+</clues>
+
+<clues type="rows">
+<line><count>4</count><count>3</count><count>2</count><count>1</count></line>
+<line><count>1</count><count>1</count><count>2</count><count>2</count><count>2</count><count>2</count><count>2</count></line>
+<line><count>1</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count></line>
+<line><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>5</count></line>
+<line><count>10</count><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>1</count></line>
+<line><count>6</count><count>1</count><count>1</count><count>3</count><count>2</count><count>1</count></line>
+<line><count>1</count><count>1</count><count>4</count><count>7</count><count>1</count><count>1</count><count>1</count></line>
+<line><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>10</count></line>
+<line><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>6</count></line>
+<line><count>1</count><count>3</count><count>1</count><count>1</count><count>4</count><count>1</count><count>1</count></line>
+<line><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count></line>
+<line><count>2</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count></line>
+<line><count>2</count><count>4</count><count>1</count><count>1</count><count>3</count><count>1</count></line>
+<line><count>1</count><count>1</count><count>2</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count></line>
+<line><count>1</count><count>2</count><count>2</count><count>3</count><count>3</count><count>1</count><count>2</count><count>1</count></line>
+<line><count>2</count><count>3</count><count>6</count><count>1</count><count>3</count><count>4</count><count>1</count></line>
+<line><count>5</count><count>3</count><count>2</count><count>1</count><count>1</count></line>
+<line><count>3</count><count>5</count><count>1</count><count>2</count><count>2</count><count>1</count><count>2</count></line>
+<line><count>1</count><count>1</count><count>2</count><count>2</count><count>1</count><count>3</count><count>1</count></line>
+<line><count>1</count><count>1</count><count>3</count><count>1</count><count>3</count><count>2</count><count>5</count></line>
+<line><count>7</count><count>3</count><count>3</count><count>2</count><count>3</count></line>
+<line><count>7</count><count>1</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>1</count></line>
+<line><count>7</count><count>5</count><count>1</count><count>1</count></line>
+<line><count>7</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>3</count><count>3</count><count>1</count><count>1</count><count>2</count><count>2</count></line>
+<line><count>3</count><count>3</count><count>1</count><count>1</count><count>10</count></line>
+<line><count>3</count><count>3</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>1</count></line>
+<line><count>3</count><count>3</count><count>1</count><count>1</count><count>1</count><count>1</count><count>2</count><count>1</count></line>
+<line><count>8</count><count>2</count><count>1</count><count>2</count><count>2</count><count>2</count><count>1</count></line>
+<line><count>8</count><count>7</count><count>7</count></line>
+</clues>
+
+</puzzle>
+</puzzleset>

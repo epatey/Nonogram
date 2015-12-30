@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE pbn SYSTEM "http://webpbn.com/pbn-0.3.dtd">
+<puzzleset>
+<source>webpbn.com</source>
+
+<puzzle type="grid" defaultcolor="black">
+<title>WCP #149 - What does the mouse see?</title>
+<author>Wombat</author>
+<authorid>wombatilim</authorid>
+<copyright>(c) Copyright 2014 by Wombat</copyright>
+<id>#24201 (v.1)</id>
+<description>The view from my mouse. I took a picture to be sure. In the foreground is the cable connecting it to the keyboard, and behind that is the bottom of my monitor. Off to the right is the corner of my glasses case.  Wait, what? You didn&apos;t mean that kind of mouse?</description>
+<note>published,definitely unique,definitely line/color solvable</note>
+
+<color name="white" char=".">FFFFFF</color>
+<color name="black" char="X">000000</color>
+
+<clues type="columns">
+<line><count>2</count><count>1</count><count>5</count></line>
+<line><count>2</count><count>1</count><count>5</count></line>
+<line><count>2</count><count>1</count><count>6</count></line>
+<line><count>1</count><count>1</count><count>5</count></line>
+<line><count>1</count><count>11</count></line>
+<line><count>1</count><count>1</count><count>4</count></line>
+<line><count>1</count><count>1</count><count>3</count></line>
+<line><count>1</count><count>1</count></line>
+<line><count>1</count><count>1</count></line>
+<line><count>2</count><count>2</count></line>
+<line><count>1</count><count>2</count></line>
+<line><count>5</count><count>2</count></line>
+<line><count>1</count><count>5</count></line>
+<line><count>1</count><count>2</count></line>
+<line><count>2</count><count>1</count></line>
+<line><count>1</count><count>1</count></line>
+<line><count>1</count><count>2</count></line>
+<line><count>2</count><count>1</count></line>
+<line><count>1</count><count>1</count></line>
+<line><count>1</count><count>2</count></line>
+<line><count>1</count></line>
+<line><count>1</count></line>
+<line><count>2</count></line>
+<line><count>1</count></line>
+<line><count>1</count></line>
+<line><count>4</count><count>2</count></line>
+<line><count>7</count><count>1</count></line>
+<line><count>1</count><count>6</count><count>1</count></line>
+<line><count>2</count><count>6</count><count>1</count></line>
+<line><count>1</count><count>5</count><count>2</count></line>
+</clues>
+
+<clues type="rows">
+<line><count>7</count><count>3</count><count>2</count></line>
+<line><count>3</count><count>4</count><count>3</count></line>
+<line><count>6</count><count>2</count></line>
+<line><count>6</count><count>1</count><count>3</count></line>
+<line><count>5</count><count>1</count><count>4</count></line>
+<line><count>1</count><count>1</count><count>5</count></line>
+<line><count>1</count><count>2</count><count>4</count></line>
+<line><count>1</count><count>1</count><count>4</count></line>
+<line><count>1</count><count>5</count><count>3</count></line>
+<line><count>4</count><count>5</count><count>4</count><count>2</count></line>
+<line><count>13</count><count>4</count></line>
+<line><count>7</count><count>4</count></line>
+<line><count>7</count><count>5</count></line>
+<line><count>5</count><count>1</count></line>
+<line><count>3</count></line>
+</clues>
+
+</puzzle>
+</puzzleset>
