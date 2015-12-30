@@ -52,7 +52,9 @@ class LineBacktracker {
 
             let lineRules = lineGetter.getRules(lineNumber: lineNum)
             let root = LineCandidate(partialLine: line, lineRules: lineRules)
-            let lineSolutions = Backtracker.solve(root)!
+            let ls = Backtracker.solve(root, stopAfter: 100)
+            let completeSolutionSet = ls.1
+            let lineSolutions = ls.0!
 
             solutions[lineNum] = lineSolutions
 
@@ -63,6 +65,36 @@ class LineBacktracker {
                 })
 
                 let ncv = line.newCellValues(partialLine, lineNumber: lineNum, cellValueBuilder: lineGetter.getCellValue)
+                if (ncv != nil) {
+                    objc_sync_enter(lock)
+                    currentSolution = currentSolution.addCellValues(ncv)
+                    objc_sync_exit(lock)
+                }
+            }
+            else if (completeSolutionSet) {
+                let sol0 = (lineSolutions[0] as! LineCandidate).cells
+                let count = sol0.count
+                var ncv:[CellValue]? = nil
+                for i in 0..<count {
+                    if line.cells[i] != nil {
+                        continue
+                    }
+                    var mismatchFound = false
+                    let ref = sol0[i]
+                    for solnum in 1..<lineSolutions.count {
+                        let solx = (lineSolutions[solnum] as! LineCandidate).cells
+                        if (solx[i] != ref) {
+                            mismatchFound = true
+                            break;
+                        }
+                    }
+                    if (!mismatchFound) {
+                        if (ncv == nil) {
+                            ncv = []
+                        }
+                        ncv!.append(lineGetter.getCellValue(lineNumber: lineNum, lineOffset: i, value: ref))
+                    }
+                }
                 if (ncv != nil) {
                     objc_sync_enter(lock)
                     currentSolution = currentSolution.addCellValues(ncv)

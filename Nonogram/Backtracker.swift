@@ -14,8 +14,12 @@ public protocol BacktrackCandidate {
 
 public class Backtracker {
     public static func solve(candidate: BacktrackCandidate) -> [BacktrackCandidate]? {
+        return solve(candidate, stopAfter: nil).0
+    }
+    
+    public static func solve(candidate: BacktrackCandidate, stopAfter:Int?) -> ([BacktrackCandidate]?, Bool) {
         if (candidate.reject()) {
-            return nil
+            return (nil, false)
         }
 
         var result: [BacktrackCandidate]? = nil
@@ -24,16 +28,25 @@ public class Backtracker {
         }
 
         for nextCandidate in candidate.children {
+            let childResult = solve(nextCandidate, stopAfter: stopAfter)
+            if (childResult.1) {
+                return childResult
+            }
             if let childsolutions = solve(nextCandidate) {
                 if let r = result {
                     result = r + childsolutions
                 } else {
                     result = childsolutions
                 }
+                if let sa = stopAfter {
+                    if result!.count >= sa {
+                        return (result, true)
+                    }
+                }
             }
         }
 
-        return result
+        return (result, false)
     }
 }
 
