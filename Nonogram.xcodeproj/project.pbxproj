@@ -33,6 +33,10 @@
 		07F146D51C3441650045D44D /* Backtracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07330A901C308879002F35C7 /* Backtracker.swift */; };
 		07F146D61C3441D00045D44D /* BTSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07F145E21C3247D20045D44D /* BTSwift.framework */; };
 		07F146D71C3441D40045D44D /* BTSwift.framework.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 07F145E71C3248140045D44D /* BTSwift.framework.dSYM */; };
+		07F146D81C3443580045D44D /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07F146CE1C3366390045D44D /* SWXMLHash.framework */; };
+		07F146D91C34435E0045D44D /* SWXMLHash.framework.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 07F146CC1C33662A0045D44D /* SWXMLHash.framework.dSYM */; };
+		07F146DD1C3444140045D44D /* SWXMLHash.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 07F146CE1C3366390045D44D /* SWXMLHash.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		07F146DE1C3444140045D44D /* BTSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 07F145E21C3247D20045D44D /* BTSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +70,17 @@
 			files = (
 				07F145E81C3248140045D44D /* BTSwift.framework.dSYM in CopyFiles */,
 				07F146CD1C33662A0045D44D /* SWXMLHash.framework.dSYM in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07F146DC1C3444030045D44D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				07F146DD1C3444140045D44D /* SWXMLHash.framework in CopyFiles */,
+				07F146DE1C3444140045D44D /* BTSwift.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07F146D81C3443580045D44D /* SWXMLHash.framework in Frameworks */,
 				07F146D61C3441D00045D44D /* BTSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,6 +208,7 @@
 				07330A7D1C30881E002F35C7 /* Sources */,
 				07330A7E1C30881E002F35C7 /* Frameworks */,
 				07330A7F1C30881E002F35C7 /* Resources */,
+				07F146DC1C3444030045D44D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -254,6 +271,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07F146D91C34435E0045D44D /* SWXMLHash.framework.dSYM in Resources */,
 				07F146D71C3441D40045D44D /* BTSwift.framework.dSYM in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

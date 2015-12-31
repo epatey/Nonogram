@@ -51,6 +51,7 @@ class LineBacktracker {
             }
 
             let lineRules = lineGetter.getRules(lineNumber: lineNum)
+            print("Getting line backtrack solution for \(line.cells.map() {$0 == nil ? "nil" : String($0!)})\nand rules\n\(lineRules)")
             let root = LineCandidate(partialLine: line, lineRules: lineRules)
             let ls = Backtracker.solve(root, stopAfter: 100)
             let completeSolutionSet = ls.1

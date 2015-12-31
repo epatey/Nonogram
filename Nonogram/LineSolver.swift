@@ -132,6 +132,41 @@ class LineSolver {
         return potentialLine.expand()
     }
 
+    private static func workTheEdges(line: PartialLine, rules: [Int]) -> PartialLine? {
+        let rule = rules[0]
+        
+        let maxRunOffsetFromEdge = rule - 1
+        var firstTrueOffset:Int? = nil
+        for i in 0..<maxRunOffsetFromEdge {
+            if line.cells[i] == true {
+                firstTrueOffset = i
+                break
+            }
+        }
+        
+        guard let ftc = firstTrueOffset else {
+            return nil
+        }
+        
+        var maybeNewCells:[Bool?]? = nil
+        for i in ftc + 1...maxRunOffsetFromEdge {
+            if (maybeNewCells == nil) {
+                maybeNewCells = line.cells
+            }
+            maybeNewCells![i] = true
+        }
+        
+        if maybeNewCells == nil {
+            return nil
+        }
+
+        if ftc == 0 && maybeNewCells!.count > rule {
+            maybeNewCells![rule] = false
+        }
+
+        return PartialLine(input: maybeNewCells!)
+    }
+    
     private static func adjustPackingForErrors(potentialLine: PackedLine, knownLine: PartialLine) -> Bool {
         for i in (0 ..< knownLine.count).reverse() {
             if let truth = knownLine[i] {
