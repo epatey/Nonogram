@@ -7,6 +7,8 @@ import Foundation
 import BTSwift
 
 class LineSolver {
+    typealias LineSolverAlgorithm = (line:PartialLine, rules:[Int]) -> PartialLine?
+
     static func execute(partialSolution: PartialSolution) -> PartialSolution {
         var currentBestSolution = partialSolution
         let context = partialSolution.context
@@ -17,15 +19,26 @@ class LineSolver {
         while (true) {
             let beforeCount = currentBestSolution.knownCellCount()
             for rowNumber in 0 ..< context.rows {
-                currentBestSolution = lineOverlap(rowNumber,
-                                                  currentBestSolution: currentBestSolution,
-                                                  lineGetter: context.rowHelper)
+                currentBestSolution = applyAlgorithm(LineSolver.computeLineOverlap,
+                                                     lineNumber: rowNumber,
+                                                     currentBestSolution: currentBestSolution,
+                                                     lineGetter: context.rowHelper)
+                currentBestSolution = applyAlgorithm(LineSolver.workTheEdges,
+                                                     lineNumber: rowNumber,
+                                                     currentBestSolution: currentBestSolution,
+                                                     lineGetter: context.rowHelper)
             }
 
             for colNumber in 0 ..< context.columns {
-                currentBestSolution = lineOverlap(colNumber,
-                                                  currentBestSolution: currentBestSolution,
-                                                  lineGetter: context.columnHelper)
+                currentBestSolution = applyAlgorithm(LineSolver.computeLineOverlap,
+                                                     lineNumber: colNumber,
+                                                     currentBestSolution: currentBestSolution,
+                                                     lineGetter: context.columnHelper
+                )
+                currentBestSolution = applyAlgorithm(LineSolver.workTheEdges,
+                                                     lineNumber: colNumber,
+                                                     currentBestSolution: currentBestSolution,
+                                                     lineGetter: context.columnHelper)
             }
 
             // knownCount = self.knownCellCount(context.mustBe)
@@ -42,27 +55,25 @@ class LineSolver {
         return currentBestSolution
     }
 
-    private static func lineOverlap(lineNumber: Int,
-                                    currentBestSolution: PartialSolution,
-                                    lineGetter: LineHelper) -> PartialSolution {
+    private static func applyAlgorithm(algorithm: LineSolverAlgorithm,
+                                       lineNumber: Int,
+                                       currentBestSolution: PartialSolution,
+                                       lineGetter: LineHelper) -> PartialSolution {
         let oldLine = lineGetter.getLine(partialSolution: currentBestSolution, lineNumber: lineNumber)
         if oldLine.complete {
             return currentBestSolution
         }
         let rules = lineGetter.getRules(lineNumber: lineNumber)
-        let changes = lineOverlapLearnings(oldLine, rules: rules, lineNumber: lineNumber, cellValueBuilder: lineGetter.getCellValue)
+        let maybeNewLine = algorithm(line: oldLine, rules: rules)
+        guard let newLine = maybeNewLine else {
+            return currentBestSolution
+        }
+
+        let changes = oldLine.newCellValues(newLine, lineNumber: lineNumber, cellValueBuilder: lineGetter.getCellValue)
         return currentBestSolution.addCellValues(changes)
     }
 
-    private static func lineOverlapLearnings(line: PartialLine,
-                                             rules: [Int],
-                                             lineNumber: Int,
-                                             cellValueBuilder: CellValueBuilder) -> [CellValue]? {
-        let newLine = LineSolver.computeLineOverlap(line, rules: rules)
-        return line.newCellValues(newLine, lineNumber: lineNumber, cellValueBuilder: cellValueBuilder)
-    }
-
-    private static func computeLineOverlap(line: PartialLine, rules: [Int]) -> PartialLine {
+    private static func computeLineOverlap(line: PartialLine, rules: [Int]) -> PartialLine? {
         let left = LineSolver.computePackedLine(line, rules: rules)
         let encodedLeft = encodedLineForLine(left)
         let right = LineSolver.computePackedLine(line.reverse(), rules: rules.reverse()).reverse()
@@ -132,39 +143,95 @@ class LineSolver {
         return potentialLine.expand()
     }
 
-    private static func workTheEdges(line: PartialLine, rules: [Int]) -> PartialLine? {
-        let rule = rules[0]
+    static func workTheEdges(line: PartialLine, rules: [Int]) -> PartialLine? {
+        let ltrResults = xworkTheEdges(line.cells, rules: rules)
+        let rtlResults = xworkTheEdges((ltrResults ?? line.cells).reverse(), rules: rules.reverse())
+        let totalResults = rtlResults == nil ? ltrResults : rtlResults!.reverse()
         
-        let maxRunOffsetFromEdge = rule - 1
-        var firstTrueOffset:Int? = nil
-        for i in 0..<maxRunOffsetFromEdge {
-            if line.cells[i] == true {
-                firstTrueOffset = i
+        
+        if let tr = totalResults {
+            return PartialLine(input: tr)
+        }
+        
+        return nil
+    }
+    
+
+    static func xworkTheEdges(cells: [Bool?], rules: [Int]) -> [Bool?]? {
+        let offsetsChanged = intWorkTheEdges(cells, rules: rules)
+        if offsetsChanged.count > 0 {
+            var newCells = cells
+            for x in offsetsChanged {
+                newCells[x.0] = x.1
+            }
+            return newCells
+        }
+
+        return nil
+    }
+
+    static func intWorkTheEdges(cells: [Bool?], rules: [Int]) -> [(Int, Bool)] {
+        let rule = rules[0]
+
+        var leadingFalses = 0
+        for x in cells {
+            if x == false {
+                leadingFalses++
+            }
+            else {
                 break
             }
         }
-        
-        guard let ftc = firstTrueOffset else {
-            return nil
-        }
-        
-        var maybeNewCells:[Bool?]? = nil
-        for i in ftc + 1...maxRunOffsetFromEdge {
-            if (maybeNewCells == nil) {
-                maybeNewCells = line.cells
+
+
+        let maxRunOffsetFromEdge = leadingFalses + rule - 1
+        var maybeFirstTrueOffset: Int? = nil
+        for i in leadingFalses ... maxRunOffsetFromEdge {
+            if cells[i] == true {
+                maybeFirstTrueOffset = i
+                break
             }
-            maybeNewCells![i] = true
+        }
+
+        var newCells: [(Int, Bool)] = []
+        guard let firstTrueOffset = maybeFirstTrueOffset else {
+            return newCells
         }
         
-        if maybeNewCells == nil {
-            return nil
+        if (firstTrueOffset < maxRunOffsetFromEdge) {
+            for i in firstTrueOffset + 1 ... maxRunOffsetFromEdge {
+                if cells[i] == nil {
+                    newCells.append((i, true))
+                }
+            }
         }
 
-        if ftc == 0 && maybeNewCells!.count > rule {
-            maybeNewCells![rule] = false
+        if (firstTrueOffset == leadingFalses + 0) {
+            let lastRun = rules.count == 1
+            let trailingFalseOffset = maxRunOffsetFromEdge + 1
+            if (lastRun) {
+                // All cells after the run must be false
+                for i in trailingFalseOffset..<cells.count {
+                    if (cells[i] != false) {
+                        newCells.append((i, false))
+                    }
+                }
+            }
+            else {
+                // The single cell after the run must be false
+                // Add the trailing false if we can
+                if (cells[trailingFalseOffset] != false) {
+                    newCells.append((trailingFalseOffset, false))
+                }
+
+                // Recurse for the next run
+                let rec = intWorkTheEdges(Array(cells.suffixFrom(trailingFalseOffset + 1)), rules: Array(rules.suffixFrom(1)))
+                let x = rec.map() { ($0.0 + trailingFalseOffset + 1, $0.1) }
+                newCells.appendContentsOf(x)
+            }
         }
 
-        return PartialLine(input: maybeNewCells!)
+        return newCells
     }
     
     private static func adjustPackingForErrors(potentialLine: PackedLine, knownLine: PartialLine) -> Bool {

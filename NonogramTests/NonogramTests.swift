@@ -21,14 +21,27 @@ class NonogramTests: XCTestCase {
         super.tearDown()
     }
     
+    func testWhatever() {
+        let line = PartialLine(input:[nil, nil, nil, nil, true, nil, nil, nil, nil, false, false, false, false, false, false, false, true, false, true, true, false, true, false, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil])
+        let rules = [5, 1, 2, 1, 1, 1]
+        let expected:[Bool?] = [true, true, true, true, true, false]
+        
+        let result = LineSolver.workTheEdges(line, rules: rules)
+    }
+    
     func testFullLeadingEdge() {
-        /*
-        let line = PartialLine(input: [true, true, false, false, false, false, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, true, false, true, true, false, true, nil, nil, false, nil, nil, nil, nil, nil, nil, nil, nil, nil, false, nil, nil, nil, false, false, false, false, true, true])
-        let rules = [2, 2, 2, 1, 2, 1, 2, 2, 2]
-        */
         let line = PartialLine(input: [true, nil, nil, nil, nil, nil])
         let rules = [5]
         let expected:[Bool?] = [true, true, true, true, true, false]
+        
+        let result = LineSolver.workTheEdges(line, rules: rules)
+        XCTAssert(result!.cells == expected)
+    }
+    
+    func testFullLeadingEdgeRecurse() {
+        let line = PartialLine(input: [true, nil, nil, nil, nil, nil, nil, true, nil])
+        let rules = [5, 3]
+        let expected:[Bool?] = [true, true, true, true, true, false, true, true, true]
         
         let result = LineSolver.workTheEdges(line, rules: rules)
         XCTAssert(result!.cells == expected)
@@ -54,7 +67,7 @@ class NonogramTests: XCTestCase {
         */
         let line = PartialLine(input: [nil, nil, nil, true, nil, nil])
         let rules = [5]
-        let expected:[Bool?] = [nil, nil, nil, true, true, nil]
+        let expected:[Bool?] = [nil, true, true, true, true, nil]
         
         let result = LineSolver.workTheEdges(line, rules: rules)
         XCTAssert(result!.cells == expected)
