@@ -148,14 +148,12 @@ class LineSolver {
     static func workTheEdges(line: PartialLine, rules: [Int]) -> PartialLine? {
         let ltrResults = xworkTheEdges(line.cells, rules: rules)
         let rtlResults = xworkTheEdges((ltrResults ?? line.cells).reverse(), rules: rules.reverse())
-        let totalResults = rtlResults == nil ? ltrResults : rtlResults!.reverse()
         
-        
-        if let tr = totalResults {
-            return PartialLine(input: tr)
+        guard let totalResults = rtlResults?.reverse() ?? ltrResults else {
+            return nil
         }
         
-        return nil
+        return PartialLine(input: totalResults)
     }
     
 

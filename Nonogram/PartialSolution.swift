@@ -35,10 +35,10 @@ class PartialSolution {
     }
 
     func addCellValues(newValues: [CellValue]?) -> PartialSolution {
-        if (newValues == nil) {
+        guard let nv = newValues else {
             return self
         }
-        return PartialSolution(numRows: rows.count, numColumns: rows[0].cells.count, copyFrom: self, newValues: newValues!)
+        return PartialSolution(numRows: rows.count, numColumns: rows[0].cells.count, copyFrom: self, newValues: nv)
     }
 
     func dump() {
