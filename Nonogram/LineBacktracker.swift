@@ -31,16 +31,36 @@ class LineBacktracker {
         return currentBest
     }
 
-    private static func findLineSolutions(partialSolution: PartialSolution,
-                                          lineGetter: LineHelper) -> PartialSolution {
+    private static func findLineSolutions(partialSolution: PartialSolution, lineGetter: LineHelper) -> PartialSolution {
         let lock: AnyObject = Int(0)
         let count = lineGetter.getLineCount()
         var solutions = [[BacktrackCandidate]](count: count, repeatedValue: [])
         var currentSolution = partialSolution
+        
+        /*
+        let x = (0..<currentSolution.context.rows)
+            .map() { ($0, lineGetter.getLine(partialSolution: currentSolution, lineNumber: $0)) }
+            .filter() { !$0.1.complete }
+            .sort() { $0.1.unknownCount < $1.1.unknownCount}
+        let xline = x[0].1
+        let xlineRules = lineGetter.getRules(lineNumber: x[0].0)
+        print("Getting line backtrack solution for \(xline.cells.map() {$0 == nil ? "nil" : String($0!)})\nand rules\n\(xlineRules)")
+        let xroot = LineCandidate(partialLine: xline, lineRules: xlineRules)
+        let xls = Backtracker.solve(xroot, stopAfter: 100)
+*/
+        
+        
+
+        
         dispatch_apply(count, dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             lineNum -> Void in
 //        for lineNum in 0 ..< count {
 
+            
+            if (lineNum == 5 && lineGetter.getDescription() == "Row") {
+                print("asdf");
+            }
+            
             objc_sync_enter(lock)
             let line = lineGetter.getLine(partialSolution: currentSolution, lineNumber: lineNum)
             objc_sync_exit(lock)
@@ -51,11 +71,13 @@ class LineBacktracker {
             }
 
             let lineRules = lineGetter.getRules(lineNumber: lineNum)
-            print("Getting line backtrack solution for \(line.cells.map() {$0 == nil ? "nil" : String($0!)})\nand rules\n\(lineRules)")
+//            print("Getting line backtrack solution for \(line.cells.map() {$0 == nil ? "nil" : String($0!)})\nand rules\n\(lineRules)")
             let root = LineCandidate(partialLine: line, lineRules: lineRules)
-            let ls = Backtracker.solve(root, stopAfter: 100)
-            let completeSolutionSet = ls.1
-            let lineSolutions = ls.0!
+            let ls = Backtracker.solve(root, stopAfter: 30)
+            let completeSolutionSet = !ls.1
+            guard let lineSolutions = ls.0 else {
+                return
+            }
 
             solutions[lineNum] = lineSolutions
 
@@ -103,7 +125,7 @@ class LineBacktracker {
                 }
             }
 
-            print("\(lineGetter.getDescription()) \(lineNum) has \(lineSolutions.count) solutions")
+//            print("\(lineGetter.getDescription()) \(lineNum) has \(lineSolutions.count) solutions")
         }
 
         return currentSolution
@@ -145,14 +167,21 @@ class LineBacktracker {
                 })
             }
 
+            let nextCell = partialLine[cells.count]
+            let c:[Bool]
+            if let nc = nextCell {
+                c = [nc]
+            }
+            else {
+                c = [true, false]
+            }
             var i: Int = 0
             return anyGenerator({
                 () -> LineCandidate? in
-                if (i == 2) {
+                if (i == c.count) {
                     return nil
                 }
-                i++
-                return LineCandidate(parent: self, nextCell: i == 1)
+                return LineCandidate(parent: self, nextCell: c[i++])
             })
         }
 

@@ -74,6 +74,8 @@ class LineSolver {
     }
 
     private static func computeLineOverlap(line: PartialLine, rules: [Int]) -> PartialLine? {
+//        print("Getting line overlap solution for \(line.cells.map() {$0 == nil ? "nil" : String($0!)})\nand rules\n\(rules)")
+
         let left = LineSolver.computePackedLine(line, rules: rules)
         let encodedLeft = encodedLineForLine(left)
         let right = LineSolver.computePackedLine(line.reverse(), rules: rules.reverse()).reverse()

@@ -39,7 +39,13 @@ class PartialLine: SequenceType {
             return cells.filter({ $0 == nil }).isEmpty
         }
     }
-
+    
+    var unknownCount: Int {
+        get {
+            return cells.filter({ $0 == nil }).count
+        }
+    }
+    
     func reverse() -> PartialLine {
         return PartialLine(cells: cells.reverse())
     }

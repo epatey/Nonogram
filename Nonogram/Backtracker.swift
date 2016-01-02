@@ -17,7 +17,7 @@ public class Backtracker {
         return solve(candidate, stopAfter: nil).0
     }
     
-    public static func solve(candidate: BacktrackCandidate, stopAfter:Int?) -> ([BacktrackCandidate]?, Bool) {
+    public static func solve(candidate: BacktrackCandidate, stopAfter:Int?) -> (solutions:[BacktrackCandidate]?, truncated:Bool) {
         if (candidate.reject()) {
             return (nil, false)
         }
@@ -29,10 +29,10 @@ public class Backtracker {
 
         for nextCandidate in candidate.children {
             let childResult = solve(nextCandidate, stopAfter: stopAfter)
-            if (childResult.1) {
+            if (childResult.truncated) {
                 return childResult
             }
-            if let childsolutions = solve(nextCandidate) {
+            if let childsolutions = childResult.solutions {
                 if let r = result {
                     result = r + childsolutions
                 } else {
