@@ -19,23 +19,23 @@ class LineSolver {
         while (true) {
             let beforeCount = currentBestSolution.knownCellCount()
             for rowNumber in 0 ..< context.rows {
-                currentBestSolution = applyAlgorithm(LineSolver.computeLineOverlap,
+                currentBestSolution = applyAlgorithm(OperlapAlgorithm.execute,
                                                      lineNumber: rowNumber,
                                                      currentBestSolution: currentBestSolution,
                                                      lineGetter: context.rowHelper)
-                currentBestSolution = applyAlgorithm(LineSolver.workTheEdges,
+                currentBestSolution = applyAlgorithm(MinMaxRangeAlgorithm.execute,
                                                      lineNumber: rowNumber,
                                                      currentBestSolution: currentBestSolution,
                                                      lineGetter: context.rowHelper)
             }
 
             for colNumber in 0 ..< context.columns {
-                currentBestSolution = applyAlgorithm(LineSolver.computeLineOverlap,
+                currentBestSolution = applyAlgorithm(OperlapAlgorithm.execute,
                                                      lineNumber: colNumber,
                                                      currentBestSolution: currentBestSolution,
                                                      lineGetter: context.columnHelper
                 )
-                currentBestSolution = applyAlgorithm(LineSolver.workTheEdges,
+                currentBestSolution = applyAlgorithm(MinMaxRangeAlgorithm.execute,
                                                      lineNumber: colNumber,
                                                      currentBestSolution: currentBestSolution,
                                                      lineGetter: context.columnHelper)
@@ -72,14 +72,116 @@ class LineSolver {
         let changes = oldLine.newCellValues(newLine, lineNumber: lineNumber, cellValueBuilder: lineGetter.getCellValue)
         return currentBestSolution.addCellValues(changes)
     }
+}
 
-    private static func computeLineOverlap(line: PartialLine, rules: [Int]) -> PartialLine? {
+class LineUtilities {
+    static func encodedLineForLine(line: PartialLine) -> [Int] {
+        return Array(line.aggregate(0) {
+            (accumulator, element) -> (Int) in
+            accumulator + (((accumulator % 2 == 1) != element!) ? 1 : 0)
+            })
+    }
+}
+
+class MinMaxRangeAlgorithm {
+    static func execute(line: PartialLine, rules: [Int]) -> PartialLine? {
+        let ltrResults = xworkTheEdges(line.cells, rules: rules)
+        let rtlResults = xworkTheEdges((ltrResults ?? line.cells).reverse(), rules: rules.reverse())
+        
+        guard let totalResults = rtlResults?.reverse() ?? ltrResults else {
+            return nil
+        }
+        
+        return PartialLine(input: totalResults)
+    }
+    
+    
+    static func xworkTheEdges(cells: [Bool?], rules: [Int]) -> [Bool?]? {
+        let offsetsChanged = intWorkTheEdges(cells, rules: rules)
+        if offsetsChanged.count > 0 {
+            var newCells = cells
+            for x in offsetsChanged {
+                newCells[x.0] = x.1
+            }
+            return newCells
+        }
+        
+        return nil
+    }
+    
+    static func intWorkTheEdges(cells: [Bool?], rules: [Int]) -> [(Int, Bool)] {
+        let rule = rules[0]
+        
+        var leadingFalses = 0
+        for x in cells {
+            if x == false {
+                leadingFalses++
+            }
+            else {
+                break
+            }
+        }
+        
+        
+        let maxRunOffsetFromEdge = leadingFalses + rule - 1
+        var maybeFirstTrueOffset: Int? = nil
+        for i in leadingFalses ... maxRunOffsetFromEdge {
+            if cells[i] == true {
+                maybeFirstTrueOffset = i
+                break
+            }
+        }
+        
+        var newCells: [(Int, Bool)] = []
+        guard let firstTrueOffset = maybeFirstTrueOffset else {
+            return newCells
+        }
+        
+        if (firstTrueOffset < maxRunOffsetFromEdge) {
+            for i in firstTrueOffset + 1 ... maxRunOffsetFromEdge {
+                if cells[i] == nil {
+                    newCells.append((i, true))
+                }
+            }
+        }
+        
+        if (firstTrueOffset == leadingFalses + 0) {
+            let lastRun = rules.count == 1
+            let trailingFalseOffset = maxRunOffsetFromEdge + 1
+            if (lastRun) {
+                // All cells after the run must be false
+                for i in trailingFalseOffset..<cells.count {
+                    if (cells[i] != false) {
+                        newCells.append((i, false))
+                    }
+                }
+            }
+            else {
+                // The single cell after the run must be false
+                // Add the trailing false if we can
+                if (cells[trailingFalseOffset] != false) {
+                    newCells.append((trailingFalseOffset, false))
+                }
+                
+                // Recurse for the next run
+                let rec = intWorkTheEdges(Array(cells.suffixFrom(trailingFalseOffset + 1)), rules: Array(rules.suffixFrom(1)))
+                let x = rec.map() { ($0.0 + trailingFalseOffset + 1, $0.1) }
+                newCells.appendContentsOf(x)
+            }
+        }
+        
+        return newCells
+    }
+}
+
+class OperlapAlgorithm {
+    static func execute(line: PartialLine, rules: [Int]) -> PartialLine? {
 //        print("Getting line overlap solution for \(line.cells.map() {$0 == nil ? "nil" : String($0!)})\nand rules\n\(rules)")
 
-        let left = LineSolver.computePackedLine(line, rules: rules)
-        let encodedLeft = encodedLineForLine(left)
-        let right = LineSolver.computePackedLine(line.reverse(), rules: rules.reverse()).reverse()
-        let encodedRight = encodedLineForLine(right)
+        let left = computePackedLine(line, rules: rules)
+        let encodedLeft = LineUtilities.encodedLineForLine(left)
+        let right = computePackedLine(line.reverse(), rules: rules.reverse()).reverse()
+        let encodedRight = LineUtilities.encodedLineForLine(right)
 
         return PartialLine(input: zip(encodedLeft, encodedRight)
         .map {
@@ -88,13 +190,6 @@ class LineSolver {
                 return (l % 2 == 1)
             }
             return nil
-        })
-    }
-
-    private static func encodedLineForLine(line: PartialLine) -> [Int] {
-        return Array(line.aggregate(0) {
-            (accumulator, element) -> (Int) in
-            accumulator + (((accumulator % 2 == 1) != element!) ? 1 : 0)
         })
     }
 
@@ -144,95 +239,6 @@ class LineSolver {
 
         return potentialLine.expand()
     }
-
-    static func workTheEdges(line: PartialLine, rules: [Int]) -> PartialLine? {
-        let ltrResults = xworkTheEdges(line.cells, rules: rules)
-        let rtlResults = xworkTheEdges((ltrResults ?? line.cells).reverse(), rules: rules.reverse())
-        
-        guard let totalResults = rtlResults?.reverse() ?? ltrResults else {
-            return nil
-        }
-        
-        return PartialLine(input: totalResults)
-    }
-    
-
-    static func xworkTheEdges(cells: [Bool?], rules: [Int]) -> [Bool?]? {
-        let offsetsChanged = intWorkTheEdges(cells, rules: rules)
-        if offsetsChanged.count > 0 {
-            var newCells = cells
-            for x in offsetsChanged {
-                newCells[x.0] = x.1
-            }
-            return newCells
-        }
-
-        return nil
-    }
-
-    static func intWorkTheEdges(cells: [Bool?], rules: [Int]) -> [(Int, Bool)] {
-        let rule = rules[0]
-
-        var leadingFalses = 0
-        for x in cells {
-            if x == false {
-                leadingFalses++
-            }
-            else {
-                break
-            }
-        }
-
-
-        let maxRunOffsetFromEdge = leadingFalses + rule - 1
-        var maybeFirstTrueOffset: Int? = nil
-        for i in leadingFalses ... maxRunOffsetFromEdge {
-            if cells[i] == true {
-                maybeFirstTrueOffset = i
-                break
-            }
-        }
-
-        var newCells: [(Int, Bool)] = []
-        guard let firstTrueOffset = maybeFirstTrueOffset else {
-            return newCells
-        }
-        
-        if (firstTrueOffset < maxRunOffsetFromEdge) {
-            for i in firstTrueOffset + 1 ... maxRunOffsetFromEdge {
-                if cells[i] == nil {
-                    newCells.append((i, true))
-                }
-            }
-        }
-
-        if (firstTrueOffset == leadingFalses + 0) {
-            let lastRun = rules.count == 1
-            let trailingFalseOffset = maxRunOffsetFromEdge + 1
-            if (lastRun) {
-                // All cells after the run must be false
-                for i in trailingFalseOffset..<cells.count {
-                    if (cells[i] != false) {
-                        newCells.append((i, false))
-                    }
-                }
-            }
-            else {
-                // The single cell after the run must be false
-                // Add the trailing false if we can
-                if (cells[trailingFalseOffset] != false) {
-                    newCells.append((trailingFalseOffset, false))
-                }
-
-                // Recurse for the next run
-                let rec = intWorkTheEdges(Array(cells.suffixFrom(trailingFalseOffset + 1)), rules: Array(rules.suffixFrom(1)))
-                let x = rec.map() { ($0.0 + trailingFalseOffset + 1, $0.1) }
-                newCells.appendContentsOf(x)
-            }
-        }
-
-        return newCells
-    }
     
     private static func adjustPackingForErrors(potentialLine: PackedLine, knownLine: PartialLine) -> Bool {
         for i in (0 ..< knownLine.count).reverse() {
@@ -241,7 +247,7 @@ class LineSolver {
                 if candidate == truth {
                     continue
                 }
-
+                
                 let run: PackedLine.Run
                 let offsetToShift: Int
                 if truth {
@@ -253,34 +259,34 @@ class LineSolver {
                     run = potentialLine.runAtOffset(i)!
                     offsetToShift = i + 1 - potentialLine.runOffset(run)
                 }
-
+                
                 if (!potentialLine.shiftRun(run, offset: offsetToShift)) {
                     return false
                 }
             }
         }
-
+        
         return true
     }
-
+    
     private struct PackedLine {
         private var runs: [Run] = []
         private let lineLength: Int
         private let totalLineSlop: Int
-
+        
         private class Run {
             var extraLeadingSpace: Int
             let index: Int
             let length: Int
-
+            
             init(extraLeadingSpace: Int, index: Int, length: Int) {
                 self.extraLeadingSpace = extraLeadingSpace
                 self.index = index
                 self.length = length
             }
         }
-
-
+        
+        
         init(rules: [Int], lineLength: Int) {
             self.lineLength = lineLength
             var i = 0
@@ -291,7 +297,7 @@ class LineSolver {
             }
             totalLineSlop = lineLength - consumedSpace
         }
-
+        
         private func runOffset(targetRun: Run) -> Int {
             var i = 0
             var firstRun = true
@@ -303,25 +309,25 @@ class LineSolver {
                 }
                 i += run.length
             }
-
+            
             fatalError("Couldn't find target run")
         }
-
+        
         private func runPriorToOffset(offset: Int) -> Run? {
             if (offset == 0) {
                 return nil
             }
-
+            
             for i in (0 ... offset - 1).reverse() {
                 let run = runAtOffset(i)
                 if (run != nil) {
                     return run
                 }
             }
-
+            
             return nil
         }
-
+        
         private func runAtOffset(offset: Int) -> Run? {
             var i = offset
             var firstRun = true
@@ -332,16 +338,16 @@ class LineSolver {
                     return nil
                 }
                 i -= leadingSpace
-
+                
                 if (i < run.length) {
                     return run
                 }
                 i -= run.length
             }
-
+            
             return nil
         }
-
+        
         subscript(index: Int) -> Bool {
             get {
                 if (index >= lineLength) {
@@ -352,27 +358,27 @@ class LineSolver {
                 for run in runs {
                     let leadingSpace = (firstRun ? 0 : 1) + run.extraLeadingSpace
                     firstRun = false
-
+                    
                     if (i < leadingSpace) {
                         return false
                     }
                     i -= leadingSpace
-
+                    
                     if (i < run.length) {
                         return true
                     }
                     i -= run.length
                 }
-
+                
                 return false
             }
         }
-
+        
         private func trailingSpaceOnLine() -> Int {
             return totalLineSlop - runs.reduce(0) {
                 return $0 + $1.extraLeadingSpace; }
         }
-
+        
         func expand() -> PartialLine {
             // TODO: make this class a SequenceType
             var result: [Bool?] = []
@@ -381,7 +387,7 @@ class LineSolver {
             }
             return PartialLine(input: result)
         }
-
+        
         // This method will attempt to shift the run specified by the amount specified.
         // If it can shift that run without bumping into that subsequent run, it
         // returns true. Otherwise, if it attempts, recursively, to move the subsequent
@@ -390,23 +396,22 @@ class LineSolver {
             let isLastRun = run.index == runs.count - 1
             let nextRun: Run? = isLastRun ? nil : runs[run.index + 1]
             let slopAvailableForShift = isLastRun
-                    ? self.trailingSpaceOnLine()
-                    : nextRun!.extraLeadingSpace
-
+                ? self.trailingSpaceOnLine()
+                : nextRun!.extraLeadingSpace
+            
             let shortfall = offset - slopAvailableForShift
             if (shortfall > 0) {
                 // TODO: offset should become atLeastOffset
                 shiftRun(runs[run.index + 1], offset: shortfall)
             }
-
+            
             run.extraLeadingSpace += offset
             if (!isLastRun) {
                 nextRun!.extraLeadingSpace -= offset
                 // TODO Assert the next run had the space to give
             }
-
+            
             return shortfall <= 0
         }
     }
-
 }
