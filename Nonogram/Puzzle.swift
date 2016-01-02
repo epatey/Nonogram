@@ -11,6 +11,12 @@ import SWXMLHash
 
 typealias CellValue = (col:Int, row:Int, value:Bool)
 typealias CellValueBuilder = (lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue
+typealias LineWorkItemFunc = (currentSolution:PartialSolution) -> [CellValue]?
+
+struct LineWorkItem {
+    let isRow:Bool
+    let lineNumber:Int
+}
 
 struct LineHelper {
     let getLine: (partialSolution:PartialSolution, lineNumber:Int) -> PartialLine

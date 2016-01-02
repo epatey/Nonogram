@@ -42,13 +42,27 @@ class PartialSolution {
     }
 
     func dump() {
+        print("┌", terminator:"")
+        for _ in 0..<context.columns {
+            print("─", terminator:"")
+        }
+        print("┐")
+        
         for row in rows {
+            print("│", terminator: "")
             for value in row.cells {
                 let x = value == nil ? "?" : value! ? "█" : " "
                 print(x, terminator: "")
             }
-            print("")
+            print("│")
         }
+        
+        print("└", terminator:"")
+        for _ in 0..<context.columns {
+            print("─", terminator:"")
+        }
+        print("┘")
+
     }
 
     func knownCellCount() -> Int {
@@ -60,7 +74,13 @@ class PartialSolution {
             })
         }
     }
-
+    
+    var complete:Bool {
+        get {
+            return knownCellCount() == context.rows * context.columns
+        }
+    }
+    
     private static func addKnownCells(rows: Int, columns: Int, inputCells: [PartialLine]?, cellsToAdd: [CellValue]) -> [PartialLine] {
         var x = inputCells ?? [PartialLine](count: rows, repeatedValue: PartialLine(count: columns))
         let groupedCellsToAdd = cellsToAdd.groupBy {

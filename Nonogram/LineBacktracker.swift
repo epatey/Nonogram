@@ -9,7 +9,9 @@
 import Foundation
 
 class LineBacktracker {
-    static func execute(partialSolution: PartialSolution) -> PartialSolution {
+    static func executeOld(partialSolution: PartialSolution) -> PartialSolution {
+        return partialSolution
+        /*
         let context = partialSolution.context
         var currentBest = partialSolution
         var knownCount = currentBest.knownCellCount()
@@ -29,106 +31,66 @@ class LineBacktracker {
         }
 
         return currentBest
-    }
-
-    private static func findLineSolutions(partialSolution: PartialSolution, lineGetter: LineHelper) -> PartialSolution {
-        let lock: AnyObject = Int(0)
-        let count = lineGetter.getLineCount()
-        var solutions = [[BacktrackCandidate]](count: count, repeatedValue: [])
-        var currentSolution = partialSolution
-        
-        /*
-        let x = (0..<currentSolution.context.rows)
-            .map() { ($0, lineGetter.getLine(partialSolution: currentSolution, lineNumber: $0)) }
-            .filter() { !$0.1.complete }
-            .sort() { $0.1.unknownCount < $1.1.unknownCount}
-        let xline = x[0].1
-        let xlineRules = lineGetter.getRules(lineNumber: x[0].0)
-        print("Getting line backtrack solution for \(xline.cells.map() {$0 == nil ? "nil" : String($0!)})\nand rules\n\(xlineRules)")
-        let xroot = LineCandidate(partialLine: xline, lineRules: xlineRules)
-        let xls = Backtracker.solve(xroot, stopAfter: 100)
 */
-        
-        
-
-        
-        dispatch_apply(count, dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            lineNum -> Void in
-//        for lineNum in 0 ..< count {
-
-            
-            if (lineNum == 5 && lineGetter.getDescription() == "Row") {
-                print("asdf");
-            }
-            
-            objc_sync_enter(lock)
-            let line = lineGetter.getLine(partialSolution: currentSolution, lineNumber: lineNum)
-            objc_sync_exit(lock)
-
-            if line.complete {
-//                continue
-                return
-            }
-
-            let lineRules = lineGetter.getRules(lineNumber: lineNum)
-//            print("Getting line backtrack solution for \(line.cells.map() {$0 == nil ? "nil" : String($0!)})\nand rules\n\(lineRules)")
-            let root = LineCandidate(partialLine: line, lineRules: lineRules)
-            let ls = Backtracker.solve(root, stopAfter: 30)
-            let completeSolutionSet = !ls.1
-            guard let lineSolutions = ls.0 else {
-                return
-            }
-
-            solutions[lineNum] = lineSolutions
-
-            if (lineSolutions.count == 1) {
-                let lineSolution = (lineSolutions[0] as! LineCandidate).cells
-                let partialLine = PartialLine(input: lineSolution.map() {
-                    $0
-                })
-
-                let ncv = line.newCellValues(partialLine, lineNumber: lineNum, cellValueBuilder: lineGetter.getCellValue)
-                if (ncv != nil) {
-                    objc_sync_enter(lock)
-                    currentSolution = currentSolution.addCellValues(ncv)
-                    objc_sync_exit(lock)
-                }
-            }
-            else if (completeSolutionSet) {
-                let sol0 = (lineSolutions[0] as! LineCandidate).cells
-                let count = sol0.count
-                var ncv:[CellValue]? = nil
-                for i in 0..<count {
-                    if line.cells[i] != nil {
-                        continue
-                    }
-                    var mismatchFound = false
-                    let ref = sol0[i]
-                    for solnum in 1..<lineSolutions.count {
-                        let solx = (lineSolutions[solnum] as! LineCandidate).cells
-                        if (solx[i] != ref) {
-                            mismatchFound = true
-                            break;
-                        }
-                    }
-                    if (!mismatchFound) {
-                        if (ncv == nil) {
-                            ncv = []
-                        }
-                        ncv!.append(lineGetter.getCellValue(lineNumber: lineNum, lineOffset: i, value: ref))
-                    }
-                }
-                if (ncv != nil) {
-                    objc_sync_enter(lock)
-                    currentSolution = currentSolution.addCellValues(ncv)
-                    objc_sync_exit(lock)
-                }
-            }
-
-//            print("\(lineGetter.getDescription()) \(lineNum) has \(lineSolutions.count) solutions")
+    }
+    
+    static func execute(line: PartialLine, rules: [Int], stopAfter:Int?, description: String) -> PartialLine? {
+        let root = LineCandidate(partialLine: line, lineRules: rules)
+        let ls = Backtracker.solve(root, stopAfter: stopAfter)
+        let completeSolutionSet = !ls.1
+        guard let lineSolutions = ls.0 else {
+            return nil
         }
-
-        return currentSolution
+        
+        if (lineSolutions.count == 1) {
+            let lineSolution = (lineSolutions[0] as! LineCandidate).cells
+            let partialLine = PartialLine(input: lineSolution.map() {
+                $0
+                })
+            return partialLine
+        }
+        
+        if (!completeSolutionSet) {
+            return nil
+        }
+        
+        // If we have a complete set of solutions, see if any of the offsets have the same value for all solutions
+        let sol0 = (lineSolutions[0] as! LineCandidate).cells
+        let count = sol0.count
+        var matches:[(lineOffset:Int, value:Bool)]?
+        for i in 0..<count {
+            if line.cells[i] != nil {
+                continue
+            }
+            var mismatchFound = false
+            let ref = sol0[i]
+            for solnum in 1..<lineSolutions.count {
+                let solx = (lineSolutions[solnum] as! LineCandidate).cells
+                if (solx[i] != ref) {
+                    mismatchFound = true
+                    break;
+                }
+            }
+            if (!mismatchFound) {
+                if (matches == nil) {
+                    matches = []
+                }
+                matches!.append((i, ref))
+            }
+        }
+        
+        if matches == nil {
+            return nil
+        }
+        
+        var newLineCells = line.cells
+        for (i, value) in matches! {
+            newLineCells[i] = value
+        }
+        
+        let result = PartialLine(input: newLineCells)
+        print("Backtrack(\(description)) discovered \(line.unknownCount - result.unknownCount) cells")
+        return result
     }
 
     class LineCandidate: BacktrackCandidate {
