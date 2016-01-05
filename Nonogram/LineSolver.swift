@@ -140,16 +140,17 @@ class MinMaxRangeAlgorithm {
 
     static func intWorkTheEdges(cells: [Bool?], rules: [Int]) -> [(Int, Bool)] {
         let rule = rules[0]
+        let lastRun = rules.count == 1
 
         var leadingFalses = 0
         for x in cells {
             if x == false {
                 leadingFalses++
-            } else {
+            }
+            else {
                 break
             }
         }
-
 
         let maxRunOffsetFromEdge = leadingFalses + rule - 1
         var maybeFirstTrueOffset: Int? = nil
@@ -160,8 +161,13 @@ class MinMaxRangeAlgorithm {
             }
         }
 
+        
         var newCells: [(Int, Bool)] = []
         guard let firstTrueOffset = maybeFirstTrueOffset else {
+            // If we get here, and the next cell is true, we can set the first nil to false
+            if (cells[maxRunOffsetFromEdge + 1] == true) {
+                newCells.append((leadingFalses, false))
+            }
             return newCells
         }
 
@@ -174,7 +180,6 @@ class MinMaxRangeAlgorithm {
         }
 
         if (firstTrueOffset == leadingFalses + 0) {
-            let lastRun = rules.count == 1
             let trailingFalseOffset = maxRunOffsetFromEdge + 1
             if (lastRun) {
                 // All cells after the run must be false
