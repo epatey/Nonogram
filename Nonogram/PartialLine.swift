@@ -8,46 +8,41 @@
 
 import Foundation
 
-class PartialLine: SequenceType {
+class PartialLine {
     let cells: [Bool?]
 
     init(count: Int) {
-        cells = [Bool?](count: count, repeatedValue: nil)
+        cells = [Bool?](repeating: nil, count: count)
     }
 
-    init<BoolOptionSequence:SequenceType where BoolOptionSequence.Generator.Element == Bool?>(input: BoolOptionSequence) {
-        cells = Array<Bool?>(input)
+    init<S>(input: S) where S: Sequence, Bool? == S.Element {
+        cells = [Bool?](input)
+    }
+
+    // TODO: This would be cleaner if I made PartialLine conform to Sequence
+    public func reduce<Result>(_ initialResult: Result, _ nextPartialResult: (Result, Bool?) throws -> Result) rethrows -> Result {
+        return try cells.reduce(initialResult, nextPartialResult)
     }
 
     private init(cells: [Bool?]) {
         self.cells = cells
     }
 
-    typealias Generator = Array<Bool?>.Generator
-
-    func generate() -> Generator {
-        return cells.generate()
-    }
     var count: Int {
-        get {
-            return cells.count
-        }
+        get { cells.count }
     }
 
+    // TODO: rename to isComplete
     var complete: Bool {
-        get {
-            return cells.filter({ $0 == nil }).isEmpty
-        }
+        get { cells.filter({ $0 == nil }).isEmpty }
     }
-    
+
     var unknownCount: Int {
-        get {
-            return cells.filter({ $0 == nil }).count
-        }
+        get { cells.filter({ $0 == nil }).count }
     }
-    
-    func reverse() -> PartialLine {
-        return PartialLine(cells: cells.reverse())
+
+    func reversed() -> PartialLine {
+        return PartialLine(cells: cells.reversed())
     }
 
     subscript(index: Int) -> Bool? {
@@ -56,30 +51,22 @@ class PartialLine: SequenceType {
 
     func newCellValues(newLine: PartialLine,
                        lineNumber: Int,
-                       cellValueBuilder: CellValueBuilder) -> [CellValue]? {
-        return PartialLine.newCellValues(self,
+                       lineHelper: LineHelper) -> [CellValue]? {
+        return PartialLine.newCellValues(oldLine: self,
                                          newLine: newLine,
                                          lineNumber: lineNumber,
-                                         cellValueBuilder: cellValueBuilder)
+                                         lineHelper: lineHelper)
     }
 
     private static func newCellValues(oldLine: PartialLine,
                                       newLine: PartialLine,
                                       lineNumber: Int,
-                                      cellValueBuilder: CellValueBuilder) -> [CellValue]? {
-        var changes: [CellValue]?
-        for lineOffset in 0 ..< oldLine.cells.count {
-            guard let newValue = newLine.cells[lineOffset] where oldLine.cells[lineOffset] == nil else {
-                continue
-            }
+                                      lineHelper: LineHelper) -> [CellValue]? {
+        let improvements = zip(newLine.cells, oldLine.cells)
+            .enumerated()
+            .filter { $1.0 != nil && $1.1 == nil }
+            .map { lineHelper.getCellValue(lineNumber, $0, $1.0!) } // ! is safe because of .filter above
 
-            if (changes == nil) {
-                changes = []
-            }
-            let change = cellValueBuilder(lineNumber: lineNumber, lineOffset: lineOffset, value: newValue)
-            changes!.append(change)
-        }
-
-        return changes
+        return improvements.isEmpty ? nil : improvements
     }
 }

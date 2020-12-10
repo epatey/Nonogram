@@ -9,12 +9,12 @@ public protocol BacktrackCandidate {
     func reject() -> Bool
 
     func accept() -> Bool
-    var children: AnyGenerator<BacktrackCandidate> { get }
+    var children: [BacktrackCandidate] { get }
 }
 
 public class Backtracker {
     public static func solve(candidate: BacktrackCandidate) -> [BacktrackCandidate]? {
-        return solve(candidate, stopAfter: nil).0
+        return solve(candidate: candidate, stopAfter: nil).0
     }
     
     public static func solve(candidate: BacktrackCandidate, stopAfter:Int?) -> (solutions:[BacktrackCandidate]?, truncated:Bool) {
@@ -28,7 +28,7 @@ public class Backtracker {
         }
 
         for nextCandidate in candidate.children {
-            let childResult = solve(nextCandidate, stopAfter: stopAfter)
+            let childResult = solve(candidate: nextCandidate, stopAfter: stopAfter)
             if (childResult.truncated) {
                 return childResult
             }

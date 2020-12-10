@@ -9,9 +9,12 @@
 import Foundation
 import SWXMLHash
 
-typealias CellValue = (col:Int, row:Int, value:Bool)
-typealias CellValueBuilder = (lineNumber:Int, lineOffset:Int, value:Bool) -> CellValue
-typealias LineWorkItemFunc = (currentSolution:PartialSolution) -> [CellValue]?
+struct CellValue {
+    let col: Int
+    let row: Int
+    let value: Bool
+}
+typealias LineWorkItemFunc = (_ currentSolution:PartialSolution) -> [CellValue]?
 
 struct LineWorkItem {
     let isRow:Bool
@@ -19,58 +22,35 @@ struct LineWorkItem {
 }
 
 struct LineHelper {
-    let getLine: (partialSolution:PartialSolution, lineNumber:Int) -> PartialLine
-    let getRules: (lineNumber:Int) -> [Int]
-    let getCellValue: CellValueBuilder
-    let getLineCount: () -> Int
-    let getDescription: () -> String
+    let lineConstraints: [[Int]]
+    let getLine: (_ partialSolution:PartialSolution, _ lineNumber:Int) -> PartialLine
+    let getCellValue: (_ lineNumber:Int, _ lineOffset:Int, _ value:Bool) -> CellValue
+    let description: String
+    func getRules(lineNumber:Int) -> [Int] {
+        return lineConstraints[lineNumber]
+    }
+    var lineCount: Int { get { lineConstraints.count } }
 }
 
 class PuzzleContext {
-    let rowConstraints:[[Int]]
-    let columnConstraints:[[Int]]
-    let rows:Int
-    let columns:Int
-    let knownCells: [(col:Int, row:Int)] = [
-    ]
+    let rowHelper: LineHelper
+    let columnHelper: LineHelper
+    let knownCells: [(col:Int, row:Int)] = []
+    var rowCount:Int { get { rowHelper.lineCount} }
+    var columnCount:Int { get { columnHelper.lineCount} }
 
-    
-    init(puzzlePath: String) {
-        let x = try! String(contentsOfFile: puzzlePath)
-        let xml = SWXMLHash.parse(x)
-        let puzzle = xml["puzzleset"]["puzzle"][0]
-        let rowRulesXml = try! puzzle["clues"].withAttr("type", "rows").children
-        rowConstraints = rowRulesXml.map() {$0.children.map() {Int($0.element!.text!)!}}
-        let colRulesXml = try! puzzle["clues"].withAttr("type", "columns").children
-        columnConstraints = colRulesXml.map() {$0.children.map() {Int($0.element!.text!)!}}
-        
-        rows = rowConstraints.count
-        columns = columnConstraints.count
+    init?(puzzlePath: String) {
+        guard let (rowConstraints, columnConstraints) = try? parseXml(xmlPath: puzzlePath) else { return nil }
+        rowHelper = LineHelper(lineConstraints: rowConstraints,
+                               getLine: { $0.row(row: $1) },
+                               getCellValue: { CellValue(col: $1, row: $0, value: $2) },
+                               description: "Row")
+        columnHelper = LineHelper(lineConstraints: columnConstraints,
+                                  getLine: { $0.column(column: $1) },
+                                  getCellValue: { CellValue(col: $0, row: $1, value: $2) },
+                                  description: "Column")
     }
-    
-    
-    // TODO: Seems like I'm trying too hard here. Just trying to use the strategy pattern. I don't
-    // think I've got it clean enough yet. Struggled trying to make these let's rather than var lazy's
-    var rowHelper: LineHelper {
-        get {
-            return LineHelper(getLine: { $0.row($1) },
-                getRules: { self.rowConstraints[$0] },
-                getCellValue: { (col: $1, row: $0, value: $2) },
-                getLineCount: { self.rows },
-                getDescription: { "Row" })
-        }
-    }
-    
-    var columnHelper: LineHelper {
-        get {
-            return LineHelper(getLine: { $0.column($1) },
-                getRules: { self.columnConstraints[$0] },
-                getCellValue: { (col: $0, row: $1, value: $2) },
-                getLineCount: { self.columns },
-                getDescription: { "Column" })
-        }
-    }
-    
+
     /*
     let rows = 10
     let columns = 5
@@ -186,5 +166,17 @@ class PuzzleContext {
     ]
 */
     
+}
+
+private func parseXml(xmlPath: String) throws -> (rowConstraints: [[Int]], columnConstraints: [[Int]]) {
+    let x = try String(contentsOfFile: xmlPath)
+    let xml = SWXMLHash.parse(x)
+    let puzzle = xml["puzzleset"]["puzzle"][0]
+    let rowRulesXml = try puzzle["clues"].withAttribute("type", "rows").children
+    let rowConstraints = rowRulesXml.map() {$0.children.map() {Int($0.element!.text)!}}
+    let colRulesXml = try puzzle["clues"].withAttribute("type", "columns").children
+    let columnConstraints = colRulesXml.map() {$0.children.map() {Int($0.element!.text)!}}
+
+    return (rowConstraints: rowConstraints, columnConstraints: columnConstraints);
 }
 

@@ -10,17 +10,17 @@ class PartialSolution {
     let context: PuzzleContext
 
     init(context: PuzzleContext) {
-        rows = PartialSolution.addKnownCells(context.rows,
-                                             columns: context.columns,
+        rows = PartialSolution.addKnownCells(rows: context.rowCount,
+                                             columns: context.columnCount,
                                              inputCells: nil,
                                              cellsToAdd: context.knownCells.map() {
-                                                 ($0, $1, true)
-                                             })
+                                                CellValue(col: $0, row: $1, value: true)
+        })
         self.context = context
     }
 
     private init(numRows: Int, numColumns: Int, copyFrom: PartialSolution, newValues: [CellValue]) {
-        rows = PartialSolution.addKnownCells(numRows, columns: numColumns, inputCells: copyFrom.rows, cellsToAdd: newValues)
+        rows = PartialSolution.addKnownCells(rows: numRows, columns: numColumns, inputCells: copyFrom.rows, cellsToAdd: newValues)
         context = copyFrom.context
     }
 
@@ -43,7 +43,7 @@ class PartialSolution {
 
     func dump() {
         print("┌", terminator:"")
-        for _ in 0..<context.columns {
+        for _ in 0..<context.columnCount {
             print("─", terminator:"")
         }
         print("┐")
@@ -58,7 +58,7 @@ class PartialSolution {
         }
         
         print("└", terminator:"")
-        for _ in 0..<context.columns {
+        for _ in 0..<context.columnCount {
             print("─", terminator:"")
         }
         print("┘")
@@ -68,7 +68,7 @@ class PartialSolution {
     func knownCellCount() -> Int {
         return rows.reduce(0) {
             (total, row) -> Int in
-            return total + row.cells.reduce(0, combine: {
+            return total + row.cells.reduce(0, {
                 (tt, val) -> Int in
                 return tt + (val != nil ? 1 : 0)
             })
@@ -77,12 +77,12 @@ class PartialSolution {
     
     var complete:Bool {
         get {
-            return knownCellCount() == context.rows * context.columns
+            return knownCellCount() == context.rowCount * context.columnCount
         }
     }
     
     private static func addKnownCells(rows: Int, columns: Int, inputCells: [PartialLine]?, cellsToAdd: [CellValue]) -> [PartialLine] {
-        var x = inputCells ?? [PartialLine](count: rows, repeatedValue: PartialLine(count: columns))
+        var x = inputCells ?? [PartialLine](repeating:  PartialLine(count: columns), count: rows);
         let groupedCellsToAdd = cellsToAdd.groupBy {
             $0.row
         }
@@ -103,3 +103,20 @@ class PartialSolution {
     }
 }
 
+public extension Array {
+    func groupBy<U>(groupingFunction group: (Element) -> U) -> [U:Array] {
+        var result = [U: Array]()
+
+        for item in self {
+            let groupKey = group(item)
+            var dictValue = result[groupKey] ?? []
+
+            // TODO: I still don't quite get the immutability rules of nested collections.
+            // when I simply mutated the dictValue in place and didn't re-assign it, it was hosed
+            dictValue.append(item)
+            result[groupKey] = dictValue
+        }
+
+        return result
+    }
+}

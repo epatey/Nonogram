@@ -36,7 +36,7 @@ class LineBacktracker {
     
     static func execute(line: PartialLine, rules: [Int], stopAfter:Int?, description: String) -> PartialLine? {
         let root = LineCandidate(partialLine: line, lineRules: rules)
-        let ls = Backtracker.solve(root, stopAfter: stopAfter)
+        let ls = Backtracker.solve(candidate: root, stopAfter: stopAfter)
         let completeSolutionSet = !ls.1
         guard let lineSolutions = ls.0 else {
             return nil
@@ -114,19 +114,16 @@ class LineBacktracker {
             let maybeMust = partialLine[self.cells.count - 1]
 
             if maybeMust == nil || maybeMust! == nextCell {
-                self.correct = LineCandidate.computeSequenceError(cells, thisDimension: partialLine.count, expectedInfo: lineRules)
+                self.correct = LineCandidate.computeSequenceError(cells: cells, thisDimension: partialLine.count, expectedInfo: lineRules)
             } else {
                 self.correct = false
             }
         }
 
-        var children: AnyGenerator<BacktrackCandidate> {
+        var children: [BacktrackCandidate] {
             if self.cells.count == partialLine.count {
                 // Wish I could figure out how to use EmptyCandidate, but it conflicts with the func's return type
-                return anyGenerator({
-                    () -> LineCandidate? in
-                    return nil
-                })
+                return []
             }
 
             let nextCell = partialLine[cells.count]
@@ -155,16 +152,14 @@ class LineBacktracker {
             return correct ?? false
         }
 
-        static func computeSequenceError<SeqBool:SequenceType where SeqBool.Generator.Element == Bool>
-                (cells: SeqBool,
-                 thisDimension: Int,
-                 expectedInfo: [Int]) -> Bool? {
+        static func computeSequenceError(cells: [Bool], thisDimension: Int, expectedInfo: [Int]) -> Bool? {
             let thisRowTotalExpectedSet = expectedInfo.reduce(0) {
                 $0 + $1
             }
             let thisRowTotalSet = cells.reduce(0) {
                 $0 + ($1 ? 1 : 0)
             }
+
             let thisCount = cells.reduce(0) {
                 $0.0 + 1
             }
@@ -185,7 +180,7 @@ class LineBacktracker {
             var thisRowInfo: [Int] = []
             for cell in cells {
                 if (cell) {
-                    runLength++
+                    runLength += 1
                 } else {
                     if (runLength != 0) {
                         thisRowInfo.append(runLength)
